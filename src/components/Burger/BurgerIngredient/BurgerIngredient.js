@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classes from 'Burger.module.scss'
+import classes from './BurgerIngredient.module.scss'
 
 const BurgerIngredient = (props) => {
   let ingredient = null
