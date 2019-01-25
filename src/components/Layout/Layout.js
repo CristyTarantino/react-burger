@@ -1,18 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const layout = (props) => (
+import classes from './Layout.module.scss'
+
+const Layout = (props) => (
   // React.Fragment https://reactjs.org/docs/fragments.html
   <>
     <div>Toolbar, SideDrawer, Backdrop</div>
-    <main>
+    <main className={classes.content}>
       {props.children}
     </main>
   </>
 )
 
-layout.propTypes = {
+Layout.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default layout
+export default Layout
