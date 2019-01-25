@@ -12,7 +12,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sass-lint": "sass-lint -vq src/**/*.scss",
+    "es-lint": "eslint --ext=js --ext=jsx ."
   },
   "browserslist": [
     ">0.2%",
@@ -29,6 +31,7 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.11.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.6.2",
+    "sass-lint": "^1.12.1"
   }
 }
