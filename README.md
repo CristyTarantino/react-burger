@@ -4,6 +4,30 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Project Structure
+
+```
+o
+`-- App
+    `-- Lyout
+        |-- Toolbar
+        |   |-- Drawer Toggle
+        |   |---------------- Logo ---------------|
+        |   `---------------- Navigation Items ---|
+        |-- Side Drawer --------------------------|
+        |   
+        |-- Backdrop
+        `-- {props.children}
+            `-- Builder Burger Page
+                |-- Build Control List
+                |   |-- Build Control
+                |   `-- Order Button    
+                |-- Burger
+                |   `-- Ingredient
+                `-- Modal
+                    `-- {props.children}
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
