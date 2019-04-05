@@ -14,11 +14,11 @@
     padding-left: 0;
   }
 
-  .success {
+  &.success {
     color: #5C9210;
   }
 
-  .danger {
+  &.danger {
     color: #944317;
   }
 }
