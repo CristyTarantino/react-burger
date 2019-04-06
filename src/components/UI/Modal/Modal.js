@@ -4,16 +4,16 @@ import Backdrop from '../Backdrop/Backdrop'
 
 import style from './Modal.module.scss'
 
-const modal = (props) => (
+const modal = ({ show, modalClosed, children }) => (
   <>
-    <Backdrop show={props.show} clicked={props.modalClosed} />
+    <Backdrop show={show} clicked={modalClosed} />
     <div
       className={style.modal}
       style={{
-        transform: props.show ? 'translateY(0)' : 'translateY(-1000vh)',
-        opacity: props.show ? '1': '0'
+        transform: show ? 'translateY(0)' : 'translateY(-1000vh)',
+        opacity: show ? '1' : '0'
       }}>
-      {props.children}
+      {children}
     </div>
   </>
 )
@@ -22,4 +22,4 @@ modal.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default modal
+export default React.memo(modal)

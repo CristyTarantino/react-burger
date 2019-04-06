@@ -28,6 +28,11 @@ o
                     `-- {props.children}
 ```
 
+## TODOs
+
+- [ ] Add proptypes
+- [ ] Lint
+
 ## Available Scripts
 
 In the project directory, you can run:
