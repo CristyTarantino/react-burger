@@ -27,62 +27,70 @@ class BurgerBuilder extends Component {
   }
 
   updatePurchaseState = (undatedIngredients) => {
-    const ingredients = {
-      ...undatedIngredients
-    };
+    this.setState(prevState => {
+      const ingredients = {
+        ...prevState.ingredients
+      }
 
-    const sum = Object.keys(ingredients).map(ingKey => {
-      return ingredients[ingKey]
-    }).reduce((sum, el) => {
-      return sum + el;
-    }, 0);
+      const sum = Object.keys(ingredients).map(ingKey => {
+        return ingredients[ingKey]
+      }).reduce((sum, el) => {
+        return sum + el;
+      }, 0)
 
-    this.setState({purchasable: sum > 0})
+      return {
+        purchasable: sum > 0
+      }
+    })
   }
 
   addIngredientHandler = (type) => {
-    const oldCount = this.state.ingredients[type]
-    const updateCounted = oldCount + 1;
-    const undatedIngredients = {
-      ...this.state.ingredients
-    }
-    const  priceAddition = INGREDIENTS_PRICE_LIST[type]
-    const oldPrice = this.state.totalPrice
-    const newPrice = oldPrice + priceAddition
+    this.setState(prevState => {
+      const oldCount = prevState.ingredients[type]
 
-    undatedIngredients[type] = updateCounted
+      const updateCounted = oldCount + 1
 
-    this.setState({
-      totalPrice: newPrice,
-      ingredients: undatedIngredients
-    })
+      const undatedIngredients = {
+        ...prevState.ingredients
+      }
 
-    this.updatePurchaseState(undatedIngredients);
+      undatedIngredients[type] = updateCounted
+
+      return {
+        // this is to avoid situation where 0.4 + 0.2 = 0.6000000000000001
+        // and then you get a -0.00 in the frontend
+        totalPrice: +(prevState.totalPrice + INGREDIENTS_PRICE_LIST[type]).toFixed(2),
+        ingredients: undatedIngredients
+      }
+    }, () => this.updatePurchaseState())
   }
 
   removeIngredientHandler = (type) => {
-    const oldCount = this.state.ingredients[type]
+    this.setState(prevState => {
+      const oldCount = prevState.ingredients[type]
 
-    if (oldCount <= 0) {
-      return;
-    }
+      if (oldCount <= 0) {
+        return {
+          totalPrice: 0
+        }
+      }
 
-    const updateCounted = oldCount - 1
+      const updateCounted = oldCount - 1
 
-    const undatedIngredients = {
-      ...this.state.ingredients
-    }
+      const undatedIngredients = {
+        ...prevState.ingredients
+      }
 
-    const  priceDeduction = INGREDIENTS_PRICE_LIST[type]
-    const oldPrice = this.state.totalPrice
-    const newPrice = oldPrice - priceDeduction
-    undatedIngredients[type] = updateCounted
-    this.setState({
-      totalPrice: newPrice,
-      ingredients: undatedIngredients
-    })
+      undatedIngredients[type] = updateCounted
 
-    this.updatePurchaseState(undatedIngredients);
+      console.log(prevState, prevState.totalPrice, INGREDIENTS_PRICE_LIST[type], type)
+      return {
+        // this is to avoid situation where 0.3 - 0.2 = 0.09999999999999998
+        // and then you get a -0.00 in the frontend
+        totalPrice: +(prevState.totalPrice - INGREDIENTS_PRICE_LIST[type]).toFixed(2),
+        ingredients: undatedIngredients
+      }
+    }, () => this.updatePurchaseState());
   }
 
   purchaseHandler = () => {
