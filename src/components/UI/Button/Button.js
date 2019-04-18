@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import style from './Button.module.scss'
 
@@ -10,5 +10,11 @@ const button = (props) => (
     {props.children}
   </button>
 )
+
+button.propTypes = {
+  btnType: PropTypes.string.isRequired,
+  clicked: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired
+}
 
 export default button

@@ -37,7 +37,9 @@ buildControlList.propTypes = {
   ingredientAdded: PropTypes.func.isRequired,
   ingredientRemoved: PropTypes.func.isRequired,
   disabled: PropTypes.object.isRequired,
-  total: PropTypes.number.isRequired
+  total: PropTypes.number.isRequired,
+  purchasable: PropTypes.bool.isRequired,
+  ordered: PropTypes.func.isRequired
 }
 
 export default buildControlList

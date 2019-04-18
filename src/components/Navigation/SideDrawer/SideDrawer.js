@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import style from './SideDrawer.module.scss'
 import Logo from '../../Logo/Logo'
 import NavigationItemList from '../NavigationItemList/NavigationItemList'
@@ -7,13 +9,13 @@ import Backdrop from '../../UI/Backdrop/Backdrop'
 const sideDrawer = (props) => {
   let attachedClasses = [style['side-drawer'], style.close]
 
-  if (props.open){
+  if (props.isOpened) {
     attachedClasses = [style['side-drawer'], style.open]
   }
 
   return (
     <>
-      <Backdrop show={props.open} clicked={props.closed} />
+      <Backdrop show={props.isOpened} clicked={props.closed} />
       <div className={attachedClasses.join(' ')}>
         <div className={style['logo-container']}>
           <Logo />
@@ -24,6 +26,11 @@ const sideDrawer = (props) => {
       </div>
     </>
   )
+}
+
+sideDrawer.propTypes = {
+  isOpened: PropTypes.bool.isRequired,
+  closed: PropTypes.func.isRequired
 }
 
 export default sideDrawer

@@ -19,16 +19,13 @@ class Layout extends Component {
   }
 
   render() {
-    return (
-      // React.Fragment https://reactjs.org/docs/fragments.html
-      <>
-        <Toolbar drawerToggleClicker={this.sideDrawerToggleHandler} />
-        <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerToggleHandler} />
-        <main className={style.content}>
-          {this.props.children}
-        </main>
-      </>
-    )
+    return <>
+      <Toolbar drawerToggleClicker={this.sideDrawerToggleHandler}/>
+      <SideDrawer isOpened={this.state.showSideDrawer} closed={this.sideDrawerToggleHandler}/>
+      <main className={style.content}>
+        {this.props.children}
+      </main>
+    </>
   }
 }
 

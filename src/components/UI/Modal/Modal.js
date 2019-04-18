@@ -4,7 +4,7 @@ import Backdrop from '../Backdrop/Backdrop'
 
 import style from './Modal.module.scss'
 
-const modal = ({ show, modalClosed, children }) => (
+const modal = React.memo(({ show, modalClosed, children }) => (
   <>
     <Backdrop show={show} clicked={modalClosed} />
     <div
@@ -16,10 +16,18 @@ const modal = ({ show, modalClosed, children }) => (
       {children}
     </div>
   </>
-)
+  // We want to update this component only if the show prop is true
+  // if we do React.memo(modal) as one of the props is children
+  // children is price and ingredients that update continuously
+  // so we need to write our own comparison function as a second argument to the method
+  // to just check the show.
+  // This method needs to return a boolean value to conditionally evaluate if the component should re-render or not.
+), (prevProps, nextProps) => prevProps.show === nextProps.show)
 
 modal.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  show: PropTypes.bool.isRequired,
+  modalClosed: PropTypes.func.isRequired
 }
 
-export default React.memo(modal)
+export default modal
