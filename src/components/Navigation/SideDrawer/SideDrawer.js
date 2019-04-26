@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import style from './SideDrawer.module.scss'
-import Logo from '../../Logo/Logo'
-import NavigationItemList from '../NavigationItemList/NavigationItemList'
-import Backdrop from '../../UI/Backdrop/Backdrop'
+import Logo from 'components/Logo/Logo'
+import NavigationItemList from 'components/Navigation/NavigationItemList/NavigationItemList'
+import Backdrop from 'components/UI/Backdrop/Backdrop'
 
 const sideDrawer = (props) => {
   let attachedClasses = [style['side-drawer'], style.close]

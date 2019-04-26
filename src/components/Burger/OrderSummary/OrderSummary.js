@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Button from '../../UI/Button/Button'
+import Button from 'components/UI/Button/Button'
 
 const orderSummary = (props) => {
   const ingredientSummary = Object.keys(props.ingredients).map(

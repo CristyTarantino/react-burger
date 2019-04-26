@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
-import Burger from '../../components/Burger/Burger'
-import BuildControlList from '../../components/Burger/BuildControlList/BuildControlList'
+import Burger from 'components/Burger/Burger'
+import BuildControlList from 'components/Burger/BuildControlList/BuildControlList'
 
-import Modal from '../../components/UI/Modal/Modal'
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import Modal from 'components/UI/Modal/Modal'
+import OrderSummary from 'components/Burger/OrderSummary/OrderSummary'
+
+import axios from 'axios-orders'
 
 const INGREDIENTS_PRICE_LIST = {
   salad: 0.5,
@@ -106,7 +108,7 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    alert('You continue!')
+
   }
 
   render () {

@@ -99,3 +99,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Configure absolute paths
+
+#### Intellij Idea
+To make Intellij Idea stop complaining about absolute paths right-click on src folder Mark Directory as Sources root.

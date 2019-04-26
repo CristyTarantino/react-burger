@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Backdrop from '../Backdrop/Backdrop'
+import Backdrop from 'components/UI/Backdrop/Backdrop'
 
 import style from './Modal.module.scss'
 

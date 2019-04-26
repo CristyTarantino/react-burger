@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import style from './Toolbar.module.scss'
-import Logo from '../../Logo/Logo'
-import NavigationItemList from '../NavigationItemList/NavigationItemList'
-import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle'
+import Logo from 'components/Logo/Logo'
+import NavigationItemList from 'components/Navigation/NavigationItemList/NavigationItemList'
+import DrawerToggle from 'components/Navigation/SideDrawer/DrawerToggle/DrawerToggle'
 
 const toolbar = (props) => (
   <header className={style.toolbar}>
