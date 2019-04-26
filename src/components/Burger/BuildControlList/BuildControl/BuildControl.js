@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import style from './BuildControl.module.scss'
+import classes from './BuildControl.module.scss'
 
 const buildControl = props => (
-  <div className={style['build-control']}>
-    <div className={style.label}>{props.label}</div>
+  <div className={classes['build-control']}>
+    <div className={classes.label}>{props.label}</div>
     <button
-      className={style.less}
+      className={classes.less}
       onClick={props.removed}
       disabled={props.disabled}
     >Less</button>
     <button
-      className={style.more}
+      className={classes.more}
       onClick={props.added}
     >More</button>
   </div>

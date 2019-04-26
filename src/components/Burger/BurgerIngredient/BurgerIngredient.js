@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import style from './BurgerIngredient.module.scss'
+import classes from './BurgerIngredient.module.scss'
 
 const burgerIngredient = (props) => {
   let ingredient = null
 
   switch (props.type) {
     case 'bread-bottom':
-      ingredient = <div className={style['bread--bottom']} />
+      ingredient = <div className={classes['bread--bottom']} />
       break
     case 'bread-top':
       ingredient = (
-        <div className={style['bread--top']}>
-          <div className={style.seeds1} />
-          <div className={style.seeds2} />
+        <div className={classes['bread--top']}>
+          <div className={classes.seeds1} />
+          <div className={classes.seeds2} />
         </div>
       )
       break
@@ -21,7 +21,7 @@ const burgerIngredient = (props) => {
     case 'cheese':
     case 'salad':
     case 'bacon':
-      ingredient = <div className={style[props.type]} />
+      ingredient = <div className={classes[props.type]} />
       break
     default:
       ingredient = null

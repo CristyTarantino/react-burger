@@ -1,7 +1,7 @@
 import React, { Component} from 'react'
 import PropTypes from 'prop-types'
 
-import style from './Layout.module.scss'
+import classes from './Layout.module.scss'
 
 import Toolbar from 'components/Navigation/Toolbar/Toolbar'
 
@@ -22,7 +22,7 @@ class Layout extends Component {
     return <>
       <Toolbar drawerToggleClicker={this.sideDrawerToggleHandler}/>
       <SideDrawer isOpened={this.state.showSideDrawer} closed={this.sideDrawerToggleHandler}/>
-      <main className={style.content}>
+      <main className={classes.content}>
         {this.props.children}
       </main>
     </>

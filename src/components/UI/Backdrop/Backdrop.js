@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import style from './Backdrop.module.scss'
+import classes from './Backdrop.module.scss'
 
-const backdrop = (props) => props.show ? <div className={style.backdrop} onClick={props.clicked} /> : null
+const backdrop = (props) => props.show ? <div className={classes.backdrop} onClick={props.clicked} /> : null
 
 backdrop.propTypes = {
   show: PropTypes.bool.isRequired,

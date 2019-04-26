@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import style from './NavigationItem.module.scss'
+import classes from './NavigationItem.module.scss'
 
 const navigationItem = (props) => (
-  <li className={style['navigation-item']}>
+  <li className={classes['navigation-item']}>
     <a
       href={props.link}
-      className={props.active ? style.active : null}>
+      className={props.active ? classes.active : null}>
       {props.children}
     </a>
   </li>

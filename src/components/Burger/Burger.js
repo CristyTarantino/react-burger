@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
 
-import style from './Burger.module.scss'
+import classes from './Burger.module.scss'
 
 const Burger = (props) => {
   let transformedIngredients = Object.keys(props.ingredients)
@@ -25,7 +25,7 @@ const Burger = (props) => {
   }
 
   return (
-    <div className={style.burger}>
+    <div className={classes.burger}>
       <BurgerIngredient type={'bread-top'} />
       { transformedIngredients }
       <BurgerIngredient type={'bread-bottom'} />

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import style from './BuildControlList.module.scss'
+import classes from './BuildControlList.module.scss'
 import BuildControl from './BuildControl/BuildControl'
 
 const controlList = [
@@ -13,7 +13,7 @@ const controlList = [
 
 const buildControlList = props => {
   return (
-    <div className={style['build-controls']}>
+    <div className={classes['build-controls']}>
       <p>Total Price: &pound;<strong>{props.total.toFixed(2)}</strong></p>
 
       {controlList.map(ctrl =>
@@ -26,7 +26,7 @@ const buildControlList = props => {
         />)}
 
       <button
-        className={style['button-order']}
+        className={classes['button-order']}
         disabled={!props.purchasable}
         onClick={props.ordered}>ORDER NOW</button>
     </div>
