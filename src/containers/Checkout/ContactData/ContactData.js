@@ -42,7 +42,7 @@ class ContactData extends Component {
       .catch(error => {
         console.log(error)
       })
-      .then(() => {
+      .finally(() => {
         this.setState({loading: false})
       })
   }
