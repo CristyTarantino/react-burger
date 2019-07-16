@@ -1,4 +1,5 @@
 import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 
 import Layout from 'hoc/Layout/Layout'
 import BurgerBuilder from 'containers/BurgerBuilder/BurgerBuilder'
@@ -8,8 +9,10 @@ const app = () => (
   // React.Fragment https://reactjs.org/docs/fragments.html
   <>
     <Layout>
-      <BurgerBuilder />
-      <Checkout />
+      <Switch>
+        <Route path='/checkout' component={BurgerBuilder} />
+        <Route path='/' component={BurgerBuilder} />
+      </Switch>
     </Layout>
   </>
 )
