@@ -10,7 +10,7 @@ const app = () => (
   <>
     <Layout>
       <Switch>
-        <Route path='/checkout' component={BurgerBuilder} />
+        <Route path='/checkout' component={Checkout} />
         <Route path='/' component={BurgerBuilder} />
       </Switch>
     </Layout>
