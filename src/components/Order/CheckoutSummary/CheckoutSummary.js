@@ -3,6 +3,7 @@ import Burger from 'components/Burger/Burger'
 import Button from 'components/UI/Button/Button'
 
 import classes from './CheckoutSummary.module.scss'
+import PropTypes from 'prop-types';
 
 const checkoutSummary = (props) => {
   return (
@@ -19,6 +20,10 @@ const checkoutSummary = (props) => {
         clicked={props.checkoutContinued}>Continue</Button>
     </div>
   )
+}
+
+checkoutSummary.propTypes = {
+  ingredients: PropTypes.object.isRequired
 }
 
 export default checkoutSummary

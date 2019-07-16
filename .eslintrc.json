@@ -3,8 +3,8 @@
     "globals": {
         "fetch": false,
         "it": false
+    },
+    "rules": {
+        "react/state-in-constructor": [2, "never"]
     }
-//    "rules": {
-//        "react/state-in-constructor": [2, "never"]
-//    }
 }

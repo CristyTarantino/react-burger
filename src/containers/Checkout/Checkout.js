@@ -4,11 +4,17 @@ import CheckoutSummary from 'components/Order/CheckoutSummary/CheckoutSummary'
 class Checkout extends Component {
   state = {
     ingredients: {
-      salad: 1,
-      meat: 1,
-      cheese: 1,
-      bacon: 1
+      salad: 0,
+      meat: 0,
+      cheese: 0,
+      bacon: 0
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      ingredients: this.parseQueryParams()
+    });
   }
 
   checkoutContinuedHandler = () => {
@@ -28,6 +34,18 @@ class Checkout extends Component {
           checkoutCancelled={this.checkoutCancelledHandler} />
       </div>
     )
+  }
+
+  parseQueryParams () {
+    const query = new URLSearchParams(this.props.location.search);
+    const ingredients = {};
+
+    for (let param of query.entries()) {
+      // ['salad', '1']
+      ingredients[param[0]] = +param[1];
+    }
+
+    return ingredients;
   }
 }
 
