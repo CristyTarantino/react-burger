@@ -53,8 +53,8 @@ const modal = ({ show, modalClosed, children }) => (
 )
 
 modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  show: PropTypes.bool.isRequired,
+  children: PropTypes.node,
+  show: PropTypes.bool,
   modalClosed: PropTypes.func.isRequired
 }
 
