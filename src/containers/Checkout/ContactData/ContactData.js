@@ -19,7 +19,8 @@ class ContactData extends Component {
         value: '',
         validation: {
           required: true,
-          valid: false
+          valid: false,
+          errorMessage: 'Please enter a valid Name'
         },
         touched: false
       },
@@ -34,7 +35,8 @@ class ContactData extends Component {
           required: true,
           valid: false,
           minLength: 6,
-          maxLength: 6
+          maxLength: 6,
+          errorMessage: 'Please enter a valid Postcode'
         },
         touched: false
       },
@@ -47,7 +49,8 @@ class ContactData extends Component {
         value: '',
         validation: {
           required: true,
-          valid: false
+          valid: false,
+          errorMessage: 'Please enter a valid Street'
         }
       },
       country: {
@@ -59,7 +62,8 @@ class ContactData extends Component {
         value: '',
         validation: {
           required: true,
-          valid: false
+          valid: false,
+          errorMessage: 'Please enter a valid Country'
         },
         touched: false
       },
@@ -72,7 +76,8 @@ class ContactData extends Component {
         value: '',
         validation: {
           required: true,
-          valid: false
+          valid: false,
+          errorMessage: 'Please enter a valid email address'
         },
         touched: false
       },
@@ -183,6 +188,7 @@ class ContactData extends Component {
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
             {...(formElement.config.validation.required ? {valid: formElement.config.validation.valid} : undefined)}
+            {...(formElement.config.validation.required ? {errorMessage: formElement.config.validation.errorMessage} : undefined)}
             touched={formElement.config.touched}
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />

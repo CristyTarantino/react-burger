@@ -6,9 +6,11 @@ import classes from './Input.module.scss'
 const Input = props => {
   let elementType = null
   const inputClasses = [classes['input__element']]
+  let validationError = null
 
   if (props.hasOwnProperty('valid') && props.touched && !props.valid) {
     inputClasses.push(classes['input__element--invalid'])
+    validationError = <p className={classes['validation-error']}>{props.errorMessage}</p>
   }
 
   switch (props.elementType) {
@@ -47,6 +49,7 @@ const Input = props => {
     <div className={classes.input}>
       <label className={classes.label}>{props.label}</label>
       { elementType }
+      { validationError }
     </div>
   )
 }
@@ -58,7 +61,8 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   changed: PropTypes.func.isRequired,
   valid: PropTypes.bool,
-  touched: PropTypes.bool.isRequired
+  touched: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string
 }
 
 export default Input
