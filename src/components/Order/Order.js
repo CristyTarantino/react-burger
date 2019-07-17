@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 const Order = (props) => {
   const ingredients = []
-  console.log(props)
 
   for (let ingredientName in props.ingredients) {
     if (props.ingredients.hasOwnProperty(ingredientName)) {
@@ -39,7 +38,7 @@ const Order = (props) => {
 }
 
 Order.propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.object,
   price: PropTypes.number.isRequired,
   customer: PropTypes.string
 }
