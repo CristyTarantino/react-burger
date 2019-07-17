@@ -7,15 +7,18 @@ const Input = props => {
   let elementType = null
 
   switch (props.elementType) {
-    case ('input'):
-      elementType = <input
+    case ('select'):
+      elementType = <select
         className={classes['input__element']}
-        {...props.elementConfig}
-        value={props.value}
-      />
+        value={props.value}>
+        {props.elementConfig.options.map(option => (
+          <option key={option.value} value={option.value}>{option.displayValue}</option>
+        ))}
+      </select>
       break
     case ('textarea'):
       elementType = <textarea
+        className={classes['input__element']}
         {...props.elementConfig}
         value={props.value}
       />
@@ -37,7 +40,7 @@ const Input = props => {
 }
 
 Input.propTypes = {
-  elementType: PropTypes.string,
+  elementType: PropTypes.string.isRequired,
   label: PropTypes.string,
   elementConfig: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired
