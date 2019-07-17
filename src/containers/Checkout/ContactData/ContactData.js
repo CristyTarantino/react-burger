@@ -86,7 +86,10 @@ class ContactData extends Component {
             }
           ]
         },
-        value: 'fastest'
+        value: 'fastest',
+        validation: {
+          required: false
+        }
       },
     },
     name: '',
@@ -167,15 +170,16 @@ class ContactData extends Component {
 
     let form = (
       <form onSubmit={this.orderHandler}>
-        {formElements.map(formElement => (
+        {formElements.map(formElement =>
           <Input
             key={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
-            value={formElement.config.values}
+            value={formElement.config.value}
+            {...(formElement.config.validation.required ? {valid: formElement.config.validation.valid} : undefined)}
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
-        ))}
+        )}
         <Button btnType='success'>ORDER</Button>
       </form>
     );

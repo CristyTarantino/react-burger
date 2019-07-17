@@ -5,11 +5,16 @@ import classes from './Input.module.scss'
 
 const Input = props => {
   let elementType = null
+  const inputClasses = [classes['input__element']]
+
+  if (props.hasOwnProperty('valid') && !props.valid) {
+    inputClasses.push(classes['input__element--invalid'])
+  }
 
   switch (props.elementType) {
     case ('select'):
       elementType = <select
-        className={classes['input__element']}
+        className={inputClasses.join(' ')}
         value={props.value}
         onChange={props.changed}>
         {props.elementConfig.options.map(option => (
@@ -23,7 +28,7 @@ const Input = props => {
       break
     case ('textarea'):
       elementType = <textarea
-        className={classes['input__element']}
+        className={inputClasses.join(' ')}
         {...props.elementConfig}
         value={props.value}
         onChange={props.changed}
@@ -31,7 +36,7 @@ const Input = props => {
       break
     default:
       elementType = <input
-        className={classes['input__element']}
+        className={inputClasses.join(' ')}
         {...props.elementConfig}
         value={props.value}
         onChange={props.changed}
@@ -51,7 +56,8 @@ Input.propTypes = {
   label: PropTypes.string,
   elementConfig: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
-  changed: PropTypes.func.isRequired
+  changed: PropTypes.func.isRequired,
+  valid: PropTypes.bool
 }
 
 export default Input
