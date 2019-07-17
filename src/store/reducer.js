@@ -8,14 +8,14 @@ const initialState = {
     meat: 0
   },
   totalPrice: 0
-};
+}
 
 const INGREDIENTS_PRICE_LIST = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
   bacon: 0.7
-};
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
