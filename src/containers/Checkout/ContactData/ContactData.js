@@ -20,7 +20,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           valid: false
-        }
+        },
+        touched: false
       },
       postcode: {
         elementType: 'input',
@@ -34,7 +35,8 @@ class ContactData extends Component {
           valid: false,
           minLength: 6,
           maxLength: 6
-        }
+        },
+        touched: false
       },
       address: {
         elementType: 'input',
@@ -58,7 +60,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           valid: false
-        }
+        },
+        touched: false
       },
       email: {
         elementType: 'input',
@@ -70,7 +73,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           valid: false
-        }
+        },
+        touched: false
       },
       deliveryMethod: {
         elementType: 'select',
@@ -89,7 +93,8 @@ class ContactData extends Component {
         value: 'fastest',
         validation: {
           required: false
-        }
+        },
+        touched: false
       },
     },
     name: '',
@@ -154,6 +159,7 @@ class ContactData extends Component {
     const updatedOrderForm = cloneDeep(this.state.orderForm)
     updatedOrderForm[formElementId].value = event.target.value
     updatedOrderForm[formElementId].validation.valid = ContactData.checkValidity(event.target.value, updatedOrderForm[formElementId].validation)
+    updatedOrderForm[formElementId].touched = true
     this.setState({orderForm: updatedOrderForm})
   }
 
@@ -177,6 +183,7 @@ class ContactData extends Component {
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
             {...(formElement.config.validation.required ? {valid: formElement.config.validation.valid} : undefined)}
+            touched={formElement.config.touched}
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         )}

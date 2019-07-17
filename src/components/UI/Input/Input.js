@@ -7,7 +7,7 @@ const Input = props => {
   let elementType = null
   const inputClasses = [classes['input__element']]
 
-  if (props.hasOwnProperty('valid') && !props.valid) {
+  if (props.hasOwnProperty('valid') && props.touched && !props.valid) {
     inputClasses.push(classes['input__element--invalid'])
   }
 
@@ -57,7 +57,8 @@ Input.propTypes = {
   elementConfig: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
   changed: PropTypes.func.isRequired,
-  valid: PropTypes.bool
+  valid: PropTypes.bool,
+  touched: PropTypes.bool.isRequired
 }
 
 export default Input
