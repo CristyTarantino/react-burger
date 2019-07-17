@@ -36,7 +36,7 @@ const Order = (props) => {
   )
 }
 
-Order.prototype = {
+Order.propTypes = {
   ingredients: PropTypes.object.isRequired,
   price: PropTypes.number.isRequired
 }
