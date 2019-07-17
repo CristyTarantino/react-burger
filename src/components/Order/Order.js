@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 const Order = (props) => {
   const ingredients = []
+  console.log(props)
 
   for (let ingredientName in props.ingredients) {
     if (props.ingredients.hasOwnProperty(ingredientName)) {
@@ -30,6 +31,7 @@ const Order = (props) => {
 
   return (
     <div className={classes.order}>
+      <p>{props.customer}</p>
       <p>Ingredients: {ingredientOutput}</p>
       <p>Price: <strong>USD {props.price}</strong></p>
     </div>
@@ -38,7 +40,8 @@ const Order = (props) => {
 
 Order.propTypes = {
   ingredients: PropTypes.object.isRequired,
-  price: PropTypes.number.isRequired
+  price: PropTypes.number.isRequired,
+  customer: PropTypes.string
 }
 
 export default Order

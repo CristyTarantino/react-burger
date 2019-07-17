@@ -41,6 +41,7 @@ class Orders extends Component {
             key={order.id}
             ingredients={order.ingredients}
             price={+order.price}
+            customer={order.hasOwnProperty('orderData') ? order.orderData.name : ''}
           />)}
       </div>
     )
