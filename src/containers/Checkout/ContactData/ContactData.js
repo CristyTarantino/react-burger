@@ -98,9 +98,26 @@ class ContactData extends Component {
   }
 
   render() {
+    const formElements = [];
+    for (let key in this.state.orderForm) {
+      if (this.state.orderForm.hasOwnProperty(key)) {
+        formElements.push({
+          id: key,
+          config: this.state.orderForm[key]
+        })
+      }
+    }
+
     let form = (
       <form>
-        <Input elementType='' elementConfig='' />
+        {formElements.map(formElement => (
+          <Input
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.values}
+          />
+        ))}
         <Button btnType='success' clicked={this.orderHandler}>ORDER</Button>
       </form>
     );
