@@ -61,7 +61,7 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   changed: PropTypes.func.isRequired,
   valid: PropTypes.bool,
-  touched: PropTypes.bool.isRequired,
+  touched: PropTypes.bool,
   errorMessage: PropTypes.string
 }
 

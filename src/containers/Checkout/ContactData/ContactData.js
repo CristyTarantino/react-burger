@@ -34,8 +34,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           valid: false,
-          minLength: 6,
-          maxLength: 6,
+          minLength: 5,
+          maxLength: 8,
           errorMessage: 'Please enter a valid Postcode'
         },
         touched: false
@@ -100,14 +100,9 @@ class ContactData extends Component {
           required: false
         },
         touched: false
-      },
+      }
     },
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postcode: ''
-    },
+    isFormValid: false,
     loading: false
   }
 
@@ -165,7 +160,16 @@ class ContactData extends Component {
     updatedOrderForm[formElementId].value = event.target.value
     updatedOrderForm[formElementId].validation.valid = ContactData.checkValidity(event.target.value, updatedOrderForm[formElementId].validation)
     updatedOrderForm[formElementId].touched = true
-    this.setState({orderForm: updatedOrderForm})
+
+    const isFormValid = []
+
+    for (let inputId in updatedOrderForm) {
+      if (updatedOrderForm.hasOwnProperty(inputId)) {
+        isFormValid.push(updatedOrderForm[inputId].validation.valid)
+      }
+    }
+
+    this.setState({orderForm: updatedOrderForm, isFormValid: !isFormValid.includes(false) })
   }
 
   render () {
@@ -193,7 +197,7 @@ class ContactData extends Component {
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         )}
-        <Button btnType='success'>ORDER</Button>
+        <Button btnType='success' disabled={!this.state.isFormValid}>ORDER</Button>
       </form>
     );
 
