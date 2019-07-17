@@ -10,7 +10,8 @@ const Input = props => {
     case ('select'):
       elementType = <select
         className={classes['input__element']}
-        value={props.value}>
+        value={props.value}
+        onChange={props.changed}>
         {props.elementConfig.options.map(option => (
           <option key={option.value} value={option.value}>{option.displayValue}</option>
         ))}
@@ -21,6 +22,7 @@ const Input = props => {
         className={classes['input__element']}
         {...props.elementConfig}
         value={props.value}
+        onChange={props.changed}
       />
       break
     default:
@@ -28,6 +30,7 @@ const Input = props => {
         className={classes['input__element']}
         {...props.elementConfig}
         value={props.value}
+        onChange={props.changed}
       />
   }
 
@@ -43,7 +46,8 @@ Input.propTypes = {
   elementType: PropTypes.string.isRequired,
   label: PropTypes.string,
   elementConfig: PropTypes.object.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  changed: PropTypes.func.isRequired
 }
 
 export default Input

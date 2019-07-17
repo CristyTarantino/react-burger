@@ -5,6 +5,7 @@ import Input from 'components/UI/Input/Input'
 
 import axios from 'axios-orders'
 import classes from './ContactData.module.scss'
+import { cloneDeep } from 'lodash'
 
 class ContactData extends Component {
   state = {
@@ -97,7 +98,13 @@ class ContactData extends Component {
       })
   }
 
-  render() {
+  inputChangedHandler = (event, formElementId) => {
+    const updatedOrderForm = cloneDeep(this.state.orderForm)
+    updatedOrderForm[formElementId].value = event.target.value
+    this.setState({orderForm: updatedOrderForm})
+  }
+
+  render () {
     const formElements = [];
     for (let key in this.state.orderForm) {
       if (this.state.orderForm.hasOwnProperty(key)) {
@@ -116,6 +123,7 @@ class ContactData extends Component {
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.values}
+            changed={(event) => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
         <Button btnType='success' clicked={this.orderHandler}>ORDER</Button>
