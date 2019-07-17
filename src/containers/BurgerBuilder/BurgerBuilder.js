@@ -13,17 +13,8 @@ import withErrorHandler from 'hoc/withErrorHandler/withErrorHandler'
 
 import * as actionTypes from 'store/actions'
 
-const INGREDIENTS_PRICE_LIST = {
-  salad: 0.5,
-  bacon: 0.7,
-  cheese: 0.4,
-  meat: 1.3
-}
-
 class BurgerBuilder extends Component {
   state = {
-    totalPrice: 0,
-    purchasable: false,
     purchasing: false,
     loading: false,
     error: false
@@ -37,71 +28,17 @@ class BurgerBuilder extends Component {
     //   .catch(error => this.setState({ error }))
   }
 
-  updatePurchaseState = (undatedIngredients) => {
-    this.setState(prevState => {
-      const ingredients = {
-        ...prevState.ingredients
-      }
-
-      const sum = Object.keys(ingredients).map(ingKey => {
-        return ingredients[ingKey]
-      }).reduce((sum, el) => {
-        return sum + el;
-      }, 0)
-
-      return {
-        purchasable: sum > 0
-      }
-    })
-  }
-
-  addIngredientHandler = (type) => {
-    this.setState(prevState => {
-      const oldCount = prevState.ingredients[type]
-
-      const updateCounted = oldCount + 1
-
-      const undatedIngredients = {
-        ...prevState.ingredients
-      }
-
-      undatedIngredients[type] = updateCounted
-
-      return {
-        // this is to avoid situation where 0.4 + 0.2 = 0.6000000000000001
-        // and then you get a -0.00 in the frontend
-        totalPrice: +(prevState.totalPrice + INGREDIENTS_PRICE_LIST[type]).toFixed(2),
-        ingredients: undatedIngredients
-      }
-    }, () => this.updatePurchaseState())
-  }
-
-  removeIngredientHandler = (type) => {
-    this.setState(prevState => {
-      const oldCount = prevState.ingredients[type]
-
-      if (oldCount <= 0) {
-        return {
-          totalPrice: 0
-        }
-      }
-
-      const updateCounted = oldCount - 1
-
-      const undatedIngredients = {
-        ...prevState.ingredients
-      }
-
-      undatedIngredients[type] = updateCounted
-
-      console.log(prevState, prevState.totalPrice, INGREDIENTS_PRICE_LIST[type], type)
-      return {
-        // this is to avoid situation where 0.3 - 0.2 = 0.09999999999999998
-        // and then you get a -0.00 in the frontend
-        totalPrice: +(prevState.totalPrice - INGREDIENTS_PRICE_LIST[type]).toFixed(2),
-        ingredients: undatedIngredients
-      }
-    }, () => this.updatePurchaseState());
+  updatePurchaseState ( ingredients ) {
+    console.log(ingredients);
+    // const sum = Object.keys( ingredients )
+    //   .map( igKey => {
+    //     return ingredients[igKey];
+    //   } )
+    //   .reduce( ( sum, el ) => {
+    //     return sum + el;
+    //   }, 0 );
+    // return sum > 0;
+    return false
   }
 
   purchaseHandler = () => {
@@ -119,10 +56,10 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => {
     const queryParams = [];
     for (let i in this.props.ings) {
-      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ings[i]));
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ings[i]));
     }
 
-    queryParams.push('price=' + this.state.totalPrice)
+    queryParams.push('price=' + this.props.total)
 
     const queryString = '?' + queryParams.join('&')
 
@@ -152,15 +89,15 @@ class BurgerBuilder extends Component {
           ingredientAdded={this.props.onIngredientAdded}
           ingredientRemoved={this.props.onIngredientRemoved}
           disabled={disabledInfo}
-          total={this.state.totalPrice}
-          purchasable={this.state.purchasable}
+          total={this.props.total}
+          purchasable={this.updatePurchaseState(this.props.ing)} //TODO
           ordered={this.purchaseHandler}
         />
       </>
 
       orderSummary = <OrderSummary
         ingredients={this.props.ings}
-        price={this.state.totalPrice}
+        price={this.props.total}
         purchaseCancelled={this.purchaseCancelHandler}
         purchaseContinued={this.purchaseContinueHandler}
       />
@@ -184,7 +121,8 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => ({
-  ings: state.ingredients
+  ings: state.ingredients,
+  total: state.totalPrice
 })
 
 const mapDispatchToProps = dispatch => ({
