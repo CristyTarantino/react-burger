@@ -8,12 +8,12 @@ import Spinner from 'components/UI/Spinner/Spinner'
 
 class Orders extends Component {
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.onFetchOrders()
   }
 
   render() {
-    let orders = <Spinner/>
+    let orders = <Spinner />
     if (!this.props.loading) {
       orders = <>
         {this.props.orders.map(order =>

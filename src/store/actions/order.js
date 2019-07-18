@@ -78,7 +78,3 @@ export const fetchOrders = () => {
       })
   }
 }
-
-export const fetchOrdersInit = () => ({
-  type: actionTypes.FETCH_ORDERS_INIT
-})
