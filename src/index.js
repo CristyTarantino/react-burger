@@ -10,7 +10,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import burgerBuilder from 'store/reducers/burgerBuilder'
 import thunk from 'redux-thunk'
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(burgerBuilder, composeEnhancers(applyMiddleware(thunk)))
 

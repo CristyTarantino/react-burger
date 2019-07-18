@@ -107,8 +107,7 @@ class ContactData extends Component {
         touched: false
       }
     },
-    isFormValid: false,
-    loading: false
+    isFormValid: false
   }
 
   static checkValidity (value, rules) {
@@ -196,7 +195,7 @@ class ContactData extends Component {
       </form>
     );
 
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner/>
     }
 
@@ -211,11 +210,12 @@ class ContactData extends Component {
 
 const mapStateToProps = state => ({
   ings: state.ingredients,
-  total: state.totalPrice
+  total: state.totalPrice,
+  loading: state.loading
 })
 
 const mapDispatchToProps = dispatch => ({
-  onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurgerStart(orderData))
+  onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurger(orderData))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(widthErrorHandler(ContactData, axios))

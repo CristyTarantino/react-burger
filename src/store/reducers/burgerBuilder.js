@@ -2,7 +2,7 @@ import * as actionTypes from 'store/actions/actionTypes'
 // import { updateObject } from '../utility'
 
 const initialState = {
-  ingredients: {},
+  ingredients: null,
   totalPrice: 0,
   error: false
 }
