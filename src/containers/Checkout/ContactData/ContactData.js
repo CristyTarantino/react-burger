@@ -6,7 +6,10 @@ import Input from 'components/UI/Input/Input'
 import { connect } from 'react-redux'
 
 import axios from 'axios-orders'
+import widthErrorHandler from 'hoc/withErrorHandler/withErrorHandler'
 import classes from './ContactData.module.scss'
+import * as orderActions from 'store/actions'
+
 import { cloneDeep } from 'lodash'
 
 class ContactData extends Component {
@@ -128,7 +131,6 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({loading: true})
 
     const formData = {};
 
@@ -144,6 +146,7 @@ class ContactData extends Component {
       orderData: formData
     }
 
+    this.props.onOrderBurger(order)
 
   }
 
@@ -211,7 +214,11 @@ const mapStateToProps = state => ({
   total: state.totalPrice
 })
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => ({
+  onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurgerStart(orderData))
+})
+
+export default connect(mapStateToProps)(widthErrorHandler(ContactData, axios))
 
 
 // Useful Resources & Links
