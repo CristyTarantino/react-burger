@@ -146,7 +146,6 @@ class ContactData extends Component {
     }
 
     this.props.onOrderBurger(order)
-
   }
 
   inputChangedHandler = (event, formElementId) => {
