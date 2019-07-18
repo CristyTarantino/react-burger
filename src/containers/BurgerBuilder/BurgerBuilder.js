@@ -29,16 +29,14 @@ class BurgerBuilder extends Component {
   }
 
   updatePurchaseState ( ingredients ) {
-    console.log(ingredients);
-    // const sum = Object.keys( ingredients )
-    //   .map( igKey => {
-    //     return ingredients[igKey];
-    //   } )
-    //   .reduce( ( sum, el ) => {
-    //     return sum + el;
-    //   }, 0 );
-    // return sum > 0;
-    return false
+    const sum = Object.keys( ingredients )
+      .map( igKey => {
+        return ingredients[igKey];
+      } )
+      .reduce( ( sum, el ) => {
+        return sum + el;
+      }, 0 );
+    return sum > 0;
   }
 
   purchaseHandler = () => {
@@ -83,17 +81,18 @@ class BurgerBuilder extends Component {
     let burger = this.state.error ? <p>Ingredients can't be loaded!</p> : <Spinner />
 
     if (this.props.ings) {
-      burger = <>
-        <Burger ingredients={this.props.ings}/>
+      console.log('IN IF', this.props.ings)
+      burger = <div>
+        <Burger ingredients={this.props.ings} />
         <BuildControlList
           ingredientAdded={this.props.onIngredientAdded}
           ingredientRemoved={this.props.onIngredientRemoved}
           disabled={disabledInfo}
           total={this.props.total}
-          purchasable={this.updatePurchaseState(this.props.ing)} //TODO
+          purchasable={this.updatePurchaseState(this.props.ings)}
           ordered={this.purchaseHandler}
         />
-      </>
+      </div>
 
       orderSummary = <OrderSummary
         ingredients={this.props.ings}
