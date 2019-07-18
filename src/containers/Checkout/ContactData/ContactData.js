@@ -218,8 +218,7 @@ const mapDispatchToProps = dispatch => ({
   onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurgerStart(orderData))
 })
 
-export default connect(mapStateToProps)(widthErrorHandler(ContactData, axios))
-
+export default connect(mapStateToProps, mapDispatchToProps)(widthErrorHandler(ContactData, axios))
 
 // Useful Resources & Links
 // Validate.js (you may import its functionality into your React projects): https://validatejs.org/
