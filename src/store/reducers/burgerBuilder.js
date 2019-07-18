@@ -1,13 +1,10 @@
-import * as actionTypes from 'store/actions'
+import * as actionTypes from 'store/actions/actionTypes'
+// import { updateObject } from '../utility'
 
 const initialState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0
-  },
-  totalPrice: 0
+  ingredients: {},
+  totalPrice: 0,
+  error: false
 }
 
 const INGREDIENTS_PRICE_LIST = {
@@ -17,7 +14,7 @@ const INGREDIENTS_PRICE_LIST = {
   bacon: 0.7
 }
 
-const reducer = (state = initialState, action) => {
+const burgerBuilder = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
       return {
@@ -37,9 +34,20 @@ const reducer = (state = initialState, action) => {
         },
         totalPrice: state.totalPrice - INGREDIENTS_PRICE_LIST[action.payload.ingredientName]
       }
+    case actionTypes.SET_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: action.payload.ingredients,
+        error: false
+      }
+    case actionTypes.FETCH_INGREDIENTS_FAILED:
+      return {
+        ...state,
+        error: true
+      }
     default:
       return state
   }
 }
 
-export default reducer
+export default burgerBuilder
