@@ -5,8 +5,6 @@ import {cloneDeep} from 'lodash';
 
 import * as actions from 'store/actions'
 import { connect } from 'react-redux'
-import withErrorHandler from 'hoc/withErrorHandler/withErrorHandler'
-import axios from 'axios-orders'
 import classes from './Auth.module.scss'
 
 class Auth extends Component {
@@ -71,7 +69,7 @@ class Auth extends Component {
 
   submitHandler = (event) => {
     event.preventDefault();
-    this.props.onAuth(this.state.email.value, this.state.password.value)
+    this.props.onAuth(this.state.authForm.email.value, this.state.authForm.password.value)
   }
 
   inputChangedHandler = (event, formElementId) => {
@@ -117,7 +115,7 @@ class Auth extends Component {
     return (
       <div className={classes.auth}>
         <form onSubmit={this.submitHandler}>
-          {form}
+          { form }
           <Button btnType='success' disabled={!this.state.isFormValid}>SUBMIT</Button>
         </form>
       </div>
@@ -133,5 +131,6 @@ const mapDispatchToProps = dispatch => ({
   onAuth: (email, password) => dispatch(actions.auth(email, password))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Auth, axios))
+export default connect(null, mapDispatchToProps)(Auth)
+
 

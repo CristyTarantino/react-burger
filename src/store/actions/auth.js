@@ -1,5 +1,5 @@
 import * as actionTypes from 'store/actions/actionTypes'
-import axios from 'axios-orders'
+import axios from 'axios'
 
 export const authStart = () => ({
   type: actionTypes.AUTH_START
@@ -19,11 +19,19 @@ export const authFailed = (error) => ({
 
 export const auth = (email, password) => {
   return dispatch => {
-    axios.get('ingredients.json')
+    const authData = {
+      email,
+      password,
+      returnSecureToken: true
+    }
+    console.log(authData)
+    axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC8Dj7x7yd6k65rq9ghjSEi-rn8W-iiIMQ', authData)
       .then(response => {
-        dispatch(authStart())
+        console.log(response)
+        dispatch(authSuccess(response.data))
       })
       .catch(error => {
+        console.log(error)
         dispatch(authFailed(error))
       })
   }
