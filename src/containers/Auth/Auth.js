@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Input from 'components/UI/Input/Input'
 import Button from 'components/UI/Button/Button'
+import Spinner from 'components/UI/Spinner/Spinner'
 import {cloneDeep} from 'lodash';
 
 import * as actions from 'store/actions'
@@ -34,7 +35,7 @@ class Auth extends Component {
         value: '',
         validation: {
           required: true,
-          minLength: 6,
+          // minLength: 6,
           valid: false,
           errorMessage: 'Please enter a valid email address'
         },
@@ -108,7 +109,7 @@ class Auth extends Component {
       }
     }
 
-    const form = formElementList.map(formElementsArray =>
+    let form = formElementList.map(formElementsArray =>
       <Input
         key={formElementsArray.id}
         elementType={formElementsArray.config.elementType}
@@ -120,8 +121,20 @@ class Auth extends Component {
         changed={(event) => this.inputChangedHandler(event, formElementsArray.id)}
       />
     )
+
+    if (this.props.loading) {
+      form = <Spinner />
+    }
+
+    let errorMessage = null
+
+    if (this.props.error) {
+      errorMessage = (<p>{this.props.error}</p>)
+    }
+
     return (
       <div className={classes.auth}>
+        { errorMessage }
         <form onSubmit={this.submitHandler}>
           { form }
           <Button btnType='success' disabled={!this.state.isFormValid}>SUBMIT</Button>
@@ -133,13 +146,13 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  loading: state.auth.loading,
+  error: state.auth.error
 })
 
 const mapDispatchToProps = dispatch => ({
   onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
 })
 
-export default connect(null, mapDispatchToProps)(Auth)
-
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
 

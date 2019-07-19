@@ -5,9 +5,12 @@ export const authStart = () => ({
   type: actionTypes.AUTH_START
 })
 
-export const authSuccess = (authData) => ({
+export const authSuccess = (token, userId) => ({
   type: actionTypes.AUTH_SUCCESS,
-  payload: authData
+  payload: {
+    idToken: token,
+    userId
+  }
 })
 
 export const authFailed = (error) => ({
@@ -29,14 +32,14 @@ export const auth = (email, password, isSignUp) => {
       ? 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC8Dj7x7yd6k65rq9ghjSEi-rn8W-iiIMQ'
       : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC8Dj7x7yd6k65rq9ghjSEi-rn8W-iiIMQ'
 
+    dispatch(authStart())
     axios.post(endpoint, authData)
       .then(response => {
-        console.log(response)
-        dispatch(authSuccess(response.data))
+        dispatch(authSuccess(response.data.idToken, response.data.localId))
       })
       .catch(error => {
-        console.log(error)
-        dispatch(authFailed(error))
+        console.log(error.response.data)
+        dispatch(authFailed(error.response.data.error.message))
       })
   }
 }
