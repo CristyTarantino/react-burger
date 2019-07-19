@@ -39,6 +39,7 @@ class ContactData extends Component {
         validation: {
           required: true,
           valid: false,
+          isUKPostCode: true,
           minLength: 5,
           maxLength: 8,
           errorMessage: 'Please enter a valid Postcode'
@@ -81,6 +82,7 @@ class ContactData extends Component {
         value: '',
         validation: {
           required: true,
+          isEmail: true,
           valid: false,
           errorMessage: 'Please enter a valid email address'
         },
@@ -125,6 +127,16 @@ class ContactData extends Component {
       isValid.push(value.length <= rules.maxLength)
     }
 
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid.push(pattern.test(value))
+    }
+
+    if (rules.isUKPostCode) {
+      const pattern = /\b((?:(?:gir)|(?:[a-pr-uwyz])(?:(?:[0-9](?:[a-hjkpstuw]|[0-9])?)|(?:[a-hk-y][0-9](?:[0-9]|[abehmnprv-y])?)))) ?([0-9][abd-hjlnp-uw-z]{2})\b/i;
+      isValid.push(pattern.test(value))
+    }
+
     return !isValid.includes(false)
   }
 
@@ -166,10 +178,10 @@ class ContactData extends Component {
   }
 
   render () {
-    const formElements = [];
+    const formElementList = [];
     for (let key in this.state.orderForm) {
       if (this.state.orderForm.hasOwnProperty(key)) {
-        formElements.push({
+        formElementList.push({
           id: key,
           config: this.state.orderForm[key]
         })
@@ -178,7 +190,7 @@ class ContactData extends Component {
 
     let form = (
       <form onSubmit={this.orderHandler}>
-        {formElements.map(formElement =>
+        {formElementList.map(formElement =>
           <Input
             key={formElement.id}
             elementType={formElement.config.elementType}
