@@ -3,6 +3,7 @@ import Input from 'components/UI/Input/Input'
 import Button from 'components/UI/Button/Button'
 import Spinner from 'components/UI/Spinner/Spinner'
 import {cloneDeep} from 'lodash';
+import { Redirect } from 'react-router-dom'
 
 import * as actions from 'store/actions'
 import { connect } from 'react-redux'
@@ -132,8 +133,15 @@ class Auth extends Component {
       errorMessage = (<p>{this.props.error}</p>)
     }
 
+    let authRedirect = null
+
+    if (this.props.isAuth) {
+      authRedirect = <Redirect to='' />
+    }
+
     return (
       <div className={classes.auth}>
+        { authRedirect }
         { errorMessage }
         <form onSubmit={this.submitHandler}>
           { form }
@@ -147,7 +155,8 @@ class Auth extends Component {
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  error: state.auth.error
+  error: state.auth.error,
+  isAuth: state.auth.token !== null
 })
 
 const mapDispatchToProps = dispatch => ({

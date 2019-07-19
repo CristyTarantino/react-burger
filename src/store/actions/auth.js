@@ -20,9 +20,14 @@ export const authFailed = (error) => ({
   }
 })
 
-export const logout = () => ({
-  type: actionTypes.AUTH_LOGOUT
-})
+export const logout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('expirationDate')
+  localStorage.removeItem('userId')
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  }
+}
 
 export const checkAuthTimeout = (exporationTime) => {
   return dispatch => {
@@ -47,12 +52,39 @@ export const auth = (email, password, isSignUp) => {
     dispatch(authStart())
     axios.post(endpoint, authData)
       .then(response => {
-        dispatch(authSuccess(response.data.idToken, response.data.localId))
-        dispatch(checkAuthTimeout(response.data.expiresIn))
+        const expiresIn = response.data.expiresIn
+        const token = response.data.idToken
+        const userId = response.data.localId
+        const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
+        localStorage.setItem('token', token)
+        localStorage.setItem('expirationDate', expirationDate)
+        localStorage.setItem('userId', userId)
+        dispatch(authSuccess(token, userId))
+        dispatch(checkAuthTimeout(expiresIn))
       })
       .catch(error => {
         console.log(error.response.data)
         dispatch(authFailed(error.response.data.error.message))
       })
+  }
+}
+
+export const authCheckState = () => {
+  return dispatch => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      dispatch(logout())
+    } else {
+      const expirationDate = new Date(localStorage.getItem('expirationDate'))
+
+      // if expirationDate is in the future (so not now)
+      if (expirationDate <= new Date()) {
+        dispatch(logout())
+      } else {
+        const userId = localStorage.getItem('userId')
+        dispatch(authSuccess(token, userId))
+        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000))
+      }
+    }
   }
 }
