@@ -21,7 +21,7 @@ const sideDrawer = (props) => {
           <Logo />
         </div>
         <nav className={classes['desktop-only']}>
-          <NavigationItemList />
+          <NavigationItemList isAuth={props.isAuth} />
         </nav>
       </div>
     </>
@@ -30,7 +30,8 @@ const sideDrawer = (props) => {
 
 sideDrawer.propTypes = {
   isOpened: PropTypes.bool.isRequired,
-  closed: PropTypes.func.isRequired
+  closed: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool
 }
 
 export default sideDrawer
