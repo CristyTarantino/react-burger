@@ -3,6 +3,10 @@ import Input from 'components/UI/Input/Input'
 import Button from 'components/UI/Button/Button'
 import {cloneDeep} from 'lodash';
 
+import * as actions from 'store/actions'
+import { connect } from 'react-redux'
+import withErrorHandler from 'hoc/withErrorHandler/withErrorHandler'
+import axios from 'axios-orders'
 import classes from './Auth.module.scss'
 
 class Auth extends Component {
@@ -65,8 +69,9 @@ class Auth extends Component {
     return !isValid.includes(false)
   }
 
-  orderHandler = (event) => {
+  submitHandler = (event) => {
     event.preventDefault();
+    this.props.onAuth(this.state.email.value, this.state.password.value)
   }
 
   inputChangedHandler = (event, formElementId) => {
@@ -111,7 +116,7 @@ class Auth extends Component {
     )
     return (
       <div className={classes.auth}>
-        <form onSubmit={this.orderHandler}>
+        <form onSubmit={this.submitHandler}>
           {form}
           <Button btnType='success' disabled={!this.state.isFormValid}>SUBMIT</Button>
         </form>
@@ -120,4 +125,13 @@ class Auth extends Component {
   }
 }
 
-export default Auth
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+  onAuth: (email, password) => dispatch(actions.auth(email, password))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Auth, axios))
+
