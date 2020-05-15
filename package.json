@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.7.0",
+    "@testing-library/react": "^10.0.4",
+    "@testing-library/user-event": "^10.2.4",
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
@@ -73,5 +73,10 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "resolutions" : {
+    "**/**/yargs-parser": "^18.1.3",
+    "**/**/http-proxy": "^1.18.0",
+    "**/**/minimist": "~1.2.5"
   }
 }
