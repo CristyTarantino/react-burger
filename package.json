@@ -23,8 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass-lint": "sass-lint -vq ./src/**/*.scss",
-    "es-lint": "eslint --ext=js --ext=jsx --fix .",
+    "stylelint": "stylelint --fix ./src/**/*.scss",
     "lint": "eslint --fix ./src",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|scss|css|md|vue|html)\""
   },
@@ -35,7 +34,9 @@
     "lint-staged": "^10.2.2",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
-    "sass-lint": "^1.13.1"
+    "stylelint": "^13.3.3",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-scss": "^3.17.2"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -59,7 +60,7 @@
       "git add"
     ],
     "src/**/*.{css,scss}": [
-      "sass-lint --fix src",
+      "stylelint --fix src",
       "prettier --write",
       "git add"
     ],
