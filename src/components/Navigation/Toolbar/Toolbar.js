@@ -13,14 +13,14 @@ const toolbar = (props) => (
       <Logo />
     </div>
     <nav className={classes['desktop-only']}>
-      <NavigationItemList isAuth={props.isAuth}/>
+      <NavigationItemList isAuth={props.isAuth} />
     </nav>
   </header>
 )
 
 toolbar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  drawerToggleClicker: PropTypes.func.isRequired
+  drawerToggleClicker: PropTypes.func.isRequired,
 }
 
 export default toolbar

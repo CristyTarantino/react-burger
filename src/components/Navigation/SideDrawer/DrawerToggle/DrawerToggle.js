@@ -12,7 +12,7 @@ const drawerToggle = (props) => (
 )
 
 drawerToggle.propTypes = {
-  clicked: PropTypes.func.isRequired
+  clicked: PropTypes.func.isRequired,
 }
 
 export default drawerToggle

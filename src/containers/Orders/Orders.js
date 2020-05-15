@@ -7,38 +7,43 @@ import Order from 'components/Order/Order'
 import Spinner from 'components/UI/Spinner/Spinner'
 
 class Orders extends Component {
-
-  componentDidMount () {
+  componentDidMount() {
     this.props.onFetchOrders(this.props.token, this.props.userId)
   }
 
   render() {
     let orders = <Spinner />
     if (!this.props.loading) {
-      orders = <>
-        {this.props.orders.map(order =>
-          <Order
-            key={order.id}
-            ingredients={order.ingredients}
-            price={+order.price}
-            customer={order.hasOwnProperty('orderData') ? order.orderData.name : ''}
-          />)}
-      </>
+      orders = (
+        <>
+          {this.props.orders.map((order) => (
+            <Order
+              key={order.id}
+              ingredients={order.ingredients}
+              price={+order.price}
+              customer={order.hasOwnProperty('orderData') ? order.orderData.name : ''}
+            />
+          ))}
+        </>
+      )
     }
 
     return orders
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   orders: state.order.orders,
   loading: state.order.loading,
   token: state.auth.token,
-  userId: state.auth.userId
+  userId: state.auth.userId,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId))
+const mapDispatchToProps = (dispatch) => ({
+  onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios))
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(Orders, axios))

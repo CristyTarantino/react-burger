@@ -2,22 +2,22 @@ import * as actionTypes from 'store/actions/actionTypes'
 import axios from 'axios'
 
 export const authStart = () => ({
-  type: actionTypes.AUTH_START
+  type: actionTypes.AUTH_START,
 })
 
 export const authSuccess = (token, userId) => ({
   type: actionTypes.AUTH_SUCCESS,
   payload: {
     idToken: token,
-    userId
-  }
+    userId,
+  },
 })
 
 export const authFailed = (error) => ({
   type: actionTypes.AUTH_FAILED,
   payload: {
-    error: error
-  }
+    error: error,
+  },
 })
 
 export const logout = () => {
@@ -25,33 +25,34 @@ export const logout = () => {
   localStorage.removeItem('expirationDate')
   localStorage.removeItem('userId')
   return {
-    type: actionTypes.AUTH_LOGOUT
+    type: actionTypes.AUTH_LOGOUT,
   }
 }
 
 export const checkAuthTimeout = (exporationTime) => {
-  return dispatch => {
+  return (dispatch) => {
     setTimeout(() => {
       dispatch(logout())
-    }, exporationTime * 1000 )
+    }, exporationTime * 1000)
   }
 }
 
 export const auth = (email, password, isSignUp) => {
-  return dispatch => {
+  return (dispatch) => {
     const authData = {
       email,
       password,
-      returnSecureToken: true
+      returnSecureToken: true,
     }
 
-    let endpoint = isSignUp
+    const endpoint = isSignUp
       ? 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC8Dj7x7yd6k65rq9ghjSEi-rn8W-iiIMQ'
       : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC8Dj7x7yd6k65rq9ghjSEi-rn8W-iiIMQ'
 
     dispatch(authStart())
-    axios.post(endpoint, authData)
-      .then(response => {
+    axios
+      .post(endpoint, authData)
+      .then((response) => {
         const expiresIn = response.data.expiresIn
         const token = response.data.idToken
         const userId = response.data.localId
@@ -62,7 +63,7 @@ export const auth = (email, password, isSignUp) => {
         dispatch(authSuccess(token, userId))
         dispatch(checkAuthTimeout(expiresIn))
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error.response.data)
         dispatch(authFailed(error.response.data.error.message))
       })
@@ -70,7 +71,7 @@ export const auth = (email, password, isSignUp) => {
 }
 
 export const authCheckState = () => {
-  return dispatch => {
+  return (dispatch) => {
     const token = localStorage.getItem('token')
     if (!token) {
       dispatch(logout())
@@ -83,7 +84,9 @@ export const authCheckState = () => {
       } else {
         const userId = localStorage.getItem('userId')
         dispatch(authSuccess(token, userId))
-        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000))
+        dispatch(
+          checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000)
+        )
       }
     }
   }

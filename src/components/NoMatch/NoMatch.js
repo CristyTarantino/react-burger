@@ -1,5 +1,5 @@
-import React from 'react';
+import React from 'react'
 
 const noMatch = () => <div>Page not found</div>
 
-export default noMatch;
+export default noMatch

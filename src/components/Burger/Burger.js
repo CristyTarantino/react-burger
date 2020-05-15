@@ -8,17 +8,17 @@ import classes from './Burger.module.scss'
 const Burger = (props) => {
   let transformedIngredients = Object.keys(props.ingredients)
     // e.g. ['salad', 'meat', 'cheese']
-    .map(ingKey => {
+    .map((ingKey) => {
       // e.g. Array[3]
-      return [...Array(props.ingredients[ingKey])].map((_, i) =>
+      return [...Array(props.ingredients[ingKey])].map((_, i) => (
         <BurgerIngredient key={ingKey + i} type={ingKey} />
-      )
+      ))
     })
     // e.g. [ [0], [0,1], [0] ]
     .reduce((arr, el) => {
       return arr.concat(el)
     }, [])
-    // Flatten the array [ {}, {}, {}, {} ]
+  // Flatten the array [ {}, {}, {}, {} ]
 
   if (!transformedIngredients.length) {
     transformedIngredients = <p>Please start adding ingredients!</p>
@@ -26,15 +26,15 @@ const Burger = (props) => {
 
   return (
     <div className={classes.burger}>
-      <BurgerIngredient type={'bread-top'} />
-      { transformedIngredients }
-      <BurgerIngredient type={'bread-bottom'} />
+      <BurgerIngredient type="bread-top" />
+      {transformedIngredients}
+      <BurgerIngredient type="bread-bottom" />
     </div>
   )
 }
 
 Burger.propTypes = {
-  ingredients: PropTypes.object.isRequired
+  ingredients: PropTypes.object.isRequired,
 }
 
 export default Burger

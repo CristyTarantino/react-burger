@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {Switch, Route} from 'react-router-dom'
 
 import Layout from 'hoc/Layout/Layout'
 import Orders from 'containers/Orders/Orders'
@@ -11,9 +11,8 @@ import {connect} from 'react-redux'
 import * as actions from 'store/actions'
 
 const App = (props) => {
-
   useEffect(() => {
-    props.onTryAutoSignup()
+    props.onTryAutoSignUp()
   })
 
   return (
@@ -21,19 +20,19 @@ const App = (props) => {
     <>
       <Layout>
         <Switch>
-          <Route path='/checkout' component={Checkout} />
-          <Route path='/orders' component={Orders} />
-          <Route path='/auth' component={Auth} />
-          <Route path='/logout' component={Logout} />
-          <Route path='/' component={BurgerBuilder} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/auth" component={Auth} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/" component={BurgerBuilder} />
         </Switch>
       </Layout>
     </>
   )
 }
 
-const mapDispatchToProps = dispatch => ({
-  onTryAutoSignup: () => dispatch(actions.authCheckState())
+const mapDispatchToProps = (dispatch) => ({
+  onTryAutoSignUp: () => dispatch(actions.authCheckState()),
 })
 
 export default connect(null, mapDispatchToProps)(App)

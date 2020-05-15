@@ -7,7 +7,8 @@ const button = (props) => (
   <button
     disabled={props.disabled}
     className={[classes.button, classes[props.btnType]].join(' ')}
-    onClick={props.clicked}>
+    onClick={props.clicked}
+  >
     {props.children}
   </button>
 )
@@ -15,7 +16,7 @@ const button = (props) => (
 button.propTypes = {
   btnType: PropTypes.string.isRequired,
   clicked: PropTypes.func,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 }
 
 export default button

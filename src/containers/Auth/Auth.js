@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Input from 'components/UI/Input/Input'
 import Button from 'components/UI/Button/Button'
 import Spinner from 'components/UI/Spinner/Spinner'
-import {cloneDeep} from 'lodash';
-import { Redirect } from 'react-router-dom'
+import {cloneDeep} from 'lodash'
+import {Redirect} from 'react-router-dom'
 
 import * as actions from 'store/actions'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import classes from './Auth.module.scss'
 
 class Auth extends Component {
@@ -23,9 +23,9 @@ class Auth extends Component {
           required: true,
           isEmail: true,
           valid: false,
-          errorMessage: 'Please enter a valid email address'
+          errorMessage: 'Please enter a valid email address',
         },
-        touched: false
+        touched: false,
       },
       password: {
         elementType: 'input',
@@ -38,16 +38,16 @@ class Auth extends Component {
           required: true,
           // minLength: 6,
           valid: false,
-          errorMessage: 'Please enter a valid email address'
+          errorMessage: 'Please enter a valid email address',
         },
-        touched: false
-      }
+        touched: false,
+      },
     },
     isFormValid: false,
-    isSignUp: true
+    isSignUp: true,
   }
 
-  static checkValidity (value, rules) {
+  static checkValidity(value, rules) {
     let isValid = []
 
     if (rules.required) {
@@ -63,7 +63,7 @@ class Auth extends Component {
     }
 
     if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
       isValid.push(pattern.test(value))
     }
 
@@ -71,14 +71,21 @@ class Auth extends Component {
   }
 
   submitHandler = (event) => {
-    event.preventDefault();
-    this.props.onAuth(this.state.authForm.email.value, this.state.authForm.password.value, this.state.isSignUp)
+    event.preventDefault()
+    this.props.onAuth(
+      this.state.authForm.email.value,
+      this.state.authForm.password.value,
+      this.state.isSignUp
+    )
   }
 
   inputChangedHandler = (event, formElementId) => {
     const updatedAuthForm = cloneDeep(this.state.authForm)
     updatedAuthForm[formElementId].value = event.target.value
-    updatedAuthForm[formElementId].validation.valid = Auth.checkValidity(event.target.value, updatedAuthForm[formElementId].validation)
+    updatedAuthForm[formElementId].validation.valid = Auth.checkValidity(
+      event.target.value,
+      updatedAuthForm[formElementId].validation
+    )
     updatedAuthForm[formElementId].touched = true
 
     const isFormValid = []
@@ -89,39 +96,45 @@ class Auth extends Component {
       }
     }
 
-    this.setState({authForm: updatedAuthForm, isFormValid: !isFormValid.includes(false) })
+    this.setState({
+      authForm: updatedAuthForm,
+      isFormValid: !isFormValid.includes(false),
+    })
   }
 
   switchAuthModeHandler = () => {
-    this.setState(prevState => ({
-        isSignUp: !prevState.isSignUp
-      })
-    )
+    this.setState((prevState) => ({
+      isSignUp: !prevState.isSignUp,
+    }))
   }
 
-  render () {
-    const formElementList = [];
+  render() {
+    const formElementList = []
     for (let key in this.state.authForm) {
       if (this.state.authForm.hasOwnProperty(key)) {
         formElementList.push({
           id: key,
-          config: this.state.authForm[key]
+          config: this.state.authForm[key],
         })
       }
     }
 
-    let form = formElementList.map(formElementsArray =>
+    let form = formElementList.map((formElementsArray) => (
       <Input
         key={formElementsArray.id}
         elementType={formElementsArray.config.elementType}
         elementConfig={formElementsArray.config.elementConfig}
         value={formElementsArray.config.value}
-        {...(formElementsArray.config.validation.required ? {valid: formElementsArray.config.validation.valid} : undefined)}
-        {...(formElementsArray.config.validation.required ? {errorMessage: formElementsArray.config.validation.errorMessage} : undefined)}
+        {...(formElementsArray.config.validation.required
+          ? {valid: formElementsArray.config.validation.valid}
+          : undefined)}
+        {...(formElementsArray.config.validation.required
+          ? {errorMessage: formElementsArray.config.validation.errorMessage}
+          : undefined)}
         touched={formElementsArray.config.touched}
         changed={(event) => this.inputChangedHandler(event, formElementsArray.id)}
       />
-    )
+    ))
 
     if (this.props.loading) {
       form = <Spinner />
@@ -130,38 +143,42 @@ class Auth extends Component {
     let errorMessage = null
 
     if (this.props.error) {
-      errorMessage = (<p>{this.props.error}</p>)
+      errorMessage = <p>{this.props.error}</p>
     }
 
     let authRedirect = null
 
     if (this.props.isAuth) {
-      authRedirect = <Redirect to='' />
+      authRedirect = <Redirect to="" />
     }
 
     return (
       <div className={classes.auth}>
-        { authRedirect }
-        { errorMessage }
+        {authRedirect}
+        {errorMessage}
         <form onSubmit={this.submitHandler}>
-          { form }
-          <Button btnType='success' disabled={!this.state.isFormValid}>SUBMIT</Button>
-          <Button btnType='danger' clicked={this.switchAuthModeHandler}>{this.state.isSignUp ? 'SWITCH TO SIGN IN' : 'SIGN IN'}</Button>
+          {form}
+          <Button btnType="success" disabled={!this.state.isFormValid}>
+            SUBMIT
+          </Button>
+          <Button btnType="danger" clicked={this.switchAuthModeHandler}>
+            {this.state.isSignUp ? 'SWITCH TO SIGN IN' : 'SIGN IN'}
+          </Button>
         </form>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   error: state.auth.error,
-  isAuth: state.auth.token !== null
+  isAuth: state.auth.token !== null,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
+const mapDispatchToProps = (dispatch) => ({
+  onAuth: (email, password, isSignUp) =>
+    dispatch(actions.auth(email, password, isSignUp)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)
-

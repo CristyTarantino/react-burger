@@ -5,76 +5,78 @@ const purchaseBurgerSuccess = (id, orderData) => ({
   type: actionTypes.PURCHASE_BURGER_SUCCESS,
   payload: {
     id: id,
-    orderData: orderData
-  }
+    orderData: orderData,
+  },
 })
 
 const purchaseBurgerFailed = (error) => ({
   type: actionTypes.PURCHASE_BURGER_FAILED,
   payload: {
-    error: error
-  }
+    error: error,
+  },
 })
 
 export const purchaseBurgerStart = () => ({
-  type: actionTypes.PURCHASE_BURGER_START
+  type: actionTypes.PURCHASE_BURGER_START,
 })
 
 export const purchaseBurger = (orderData) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(purchaseBurgerStart())
-    axios.post(`/orders.json`, orderData)
-      .then(response => {
+    axios
+      .post('/orders.json', orderData)
+      .then((response) => {
         console.log(response.data.name)
         dispatch(purchaseBurgerSuccess(response.data, orderData))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(purchaseBurgerFailed(error))
       })
   }
 }
 
 export const purchaseInit = () => ({
-  type: actionTypes.PURCHASE_INIT
+  type: actionTypes.PURCHASE_INIT,
 })
 
 const fetchOrdersSuccess = (orders) => ({
   type: actionTypes.FETCH_ORDERS_SUCCESS,
   payload: {
-    orders: orders
-  }
+    orders: orders,
+  },
 })
 
 const fetchOrdersFailed = (error) => ({
   type: actionTypes.FETCH_ORDERS_FAILED,
   payload: {
-    error: error
-  }
+    error: error,
+  },
 })
 
 export const fetchOrdersStart = () => ({
-  type: actionTypes.FETCH_ORDERS_START
+  type: actionTypes.FETCH_ORDERS_START,
 })
 
 export const fetchOrders = (token, userId) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchOrdersStart())
     const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`
-    axios.get(`orders.json${queryParams}`)
-      .then(response => {
+    axios
+      .get(`orders.json${queryParams}`)
+      .then((response) => {
         const fetchedOrders = []
-        for (let key in response.data) {
+        for (const key in response.data) {
           if (response.data.hasOwnProperty(key)) {
             fetchedOrders.push({
               ...response.data[key],
-              id: key
+              id: key,
             })
           }
         }
 
         dispatch(fetchOrdersSuccess(fetchedOrders))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(fetchOrdersFailed(error))
       })
   }

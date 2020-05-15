@@ -3,7 +3,7 @@ import Burger from 'components/Burger/Burger'
 import Button from 'components/UI/Button/Button'
 
 import classes from './CheckoutSummary.module.scss'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const checkoutSummary = (props) => {
   return (
@@ -12,18 +12,18 @@ const checkoutSummary = (props) => {
       <div style={{width: '100%', margin: 'auto'}}>
         <Burger ingredients={props.ingredients} />
       </div>
-      <Button
-        btnType='danger'
-        clicked={props.checkoutCancelled}>Cancel</Button>
-      <Button
-        btnType='success'
-        clicked={props.checkoutContinued}>Continue</Button>
+      <Button btnType="danger" clicked={props.checkoutCancelled}>
+        Cancel
+      </Button>
+      <Button btnType="success" clicked={props.checkoutContinued}>
+        Continue
+      </Button>
     </div>
   )
 }
 
 checkoutSummary.propTypes = {
-  ingredients: PropTypes.object.isRequired
+  ingredients: PropTypes.object.isRequired,
 }
 
 export default checkoutSummary
