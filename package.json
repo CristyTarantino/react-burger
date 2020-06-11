@@ -60,17 +60,14 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json}": [
       "eslint --fix src",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "src/**/*.{css,scss}": [
       "stylelint --fix src",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "src/**/*.{html,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "husky": {
