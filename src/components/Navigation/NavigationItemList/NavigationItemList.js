@@ -4,10 +4,10 @@ import classes from './NavigationItemList.module.scss'
 import NavigationItem from './NavigationItem/NavigationItem'
 import PropTypes from 'prop-types'
 
-const NavigationItemList = (props) => {
+const NavigationItemList = ({isAuth}) => {
   let auth = <NavigationItem link="/auth">Log In</NavigationItem>
 
-  if (props.isAuth) {
+  if (isAuth) {
     auth = (
       <>
         <NavigationItem link="/orders">Orders</NavigationItem>
