@@ -14,8 +14,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
     })
     const resInterceptor = axios.interceptors.response.use(
       (res) => res,
-      (error) => {
-        setError(error)
+      (err) => {
+        setError(err)
       }
     )
 
@@ -29,12 +29,12 @@ const withErrorHandler = (WrappedComponent, axios) => {
         axios.interceptors.request.eject(reqInterceptor)
         axios.interceptors.response.eject(resInterceptor)
       }
-    }, [error, reqInterceptor, resInterceptor]) // Only re-run the effect if count changes
+    }, [reqInterceptor, resInterceptor]) // Only re-run the effect if count changes
 
     return (
       <>
         <Modal show={error} modalClosed={errorConfirmedHandler}>
-          <p>{error ? error.message : null}</p>
+          {error ? error.message : null}
         </Modal>
         <WrappedComponent {...props} />
       </>
