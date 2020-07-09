@@ -20,7 +20,7 @@ const Toolbar = ({onDrawerToggleClicker, isAuth}) => (
 
 Toolbar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  drawerToggleClicker: PropTypes.func.isRequired,
+  onDrawerToggleClicker: PropTypes.func.isRequired,
 }
 
 export default Toolbar

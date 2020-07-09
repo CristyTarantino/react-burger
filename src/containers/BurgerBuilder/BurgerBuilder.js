@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {connect} from 'react-redux'
+import React, {useState, useEffect, useCallback} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 
 import Burger from 'components/Burger/Burger'
 import BuildControlList from 'components/Burger/BuildControlList/BuildControlList'
@@ -13,19 +13,25 @@ import withErrorHandler from 'hoc/withErrorHandler/withErrorHandler'
 
 import * as actions from 'store/actions'
 
-const BurgerBuilder = ({
-  ings,
-  total,
-  error,
-  onInitIngredients,
-  onIngredientAdded,
-  onIngredientRemoved,
-  onInitPurchase,
-  onSetAuthRedirectPath,
-  history,
-  isAuthenticated,
-}) => {
+const BurgerBuilder = ({history}) => {
   const [isPurchasing, setIsPurchasing] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const ings = useSelector((state) => state.burgerBuilder.ingredients)
+  const total = useSelector((state) => state.burgerBuilder.totalPrice)
+  const error = useSelector((state) => state.burgerBuilder.error)
+  const isAuthenticated = useSelector((state) => state.auth.token !== null)
+
+  const onIngredientAdded = (ingName) => dispatch(actions.addIngredient(ingName))
+  const onIngredientRemoved = (ingName) => dispatch(actions.removeIngredient(ingName))
+  const onInitPurchase = () => dispatch(actions.purchaseInit())
+  const onSetAuthRedirectPath = (path) => dispatch(actions.setAuthRedirectPath(path))
+
+  // avoid recreating the onInitIngredients at every component reload creating an infinite look
+  const onInitIngredients = useCallback(() => dispatch(actions.initIngredients()), [
+    dispatch,
+  ])
 
   useEffect(() => {
     onInitIngredients()
@@ -108,22 +114,4 @@ const BurgerBuilder = ({
   )
 }
 
-const mapStateToProps = (state) => ({
-  ings: state.burgerBuilder.ingredients,
-  total: state.burgerBuilder.totalPrice,
-  error: state.burgerBuilder.error,
-  isAuthenticated: state.auth.token !== null,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
-  onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
-  onInitIngredients: () => dispatch(actions.initIngredients()),
-  onInitPurchase: () => dispatch(actions.purchaseInit()),
-  onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path)),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withErrorHandler(BurgerBuilder, axios))
+export default withErrorHandler(BurgerBuilder, axios)
