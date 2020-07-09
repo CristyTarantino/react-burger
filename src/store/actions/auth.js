@@ -20,6 +20,15 @@ export const authFailed = (error) => ({
   },
 })
 
+export const setAuthRedirectPath = (path) => {
+  return {
+    type: actionTypes.SET_AUTH_REDIRECT_PATH,
+    payload: {
+      path: path,
+    },
+  }
+}
+
 export const logout = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('expirationDate')
