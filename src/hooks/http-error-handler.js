@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 
 export default (httpClient) => {
   const [error, setError] = useState(null)
@@ -26,7 +26,12 @@ export default (httpClient) => {
       httpClient.interceptors.request.eject(reqInterceptor)
       httpClient.interceptors.response.eject(resInterceptor)
     }
-  }, [reqInterceptor, resInterceptor]) // Only re-run the effect if count changes
+  }, [
+    httpClient.interceptors.request,
+    httpClient.interceptors.response,
+    reqInterceptor,
+    resInterceptor,
+  ]) // Only re-run the effect if count changes
 
   return [error, errorConfirmedHandler]
 }

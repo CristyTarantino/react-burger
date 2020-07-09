@@ -80,7 +80,7 @@ const Auth = ({
     if (!buildingBurger && authRedirectPath !== '/') {
       onSetAuthRedirectPath()
     }
-  }, [])
+  }, [authRedirectPath, buildingBurger, onSetAuthRedirectPath])
 
   const inputChangedHandler = (event, formElementId) => {
     const updatedAuthForm = cloneDeep(authForm)
