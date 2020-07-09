@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 
 import classes from './NavigationItem.module.scss'
 
-const navigationItem = (props) => (
+const navigationItem = ({link, exact, children}) => (
   <li className={classes['navigation-item']}>
-    <NavLink exact={props.exact} activeClassName={classes.active} to={props.link}>
-      {props.children}
+    <NavLink exact={exact} activeClassName={classes.active} to={link}>
+      {children}
     </NavLink>
   </li>
 )

@@ -21,7 +21,9 @@ const BurgerBuilder = ({
   onIngredientAdded,
   onIngredientRemoved,
   onInitPurchase,
+  onSetAuthRedirectPath,
   history,
+  isAuthenticated,
 }) => {
   const [isPurchasing, setIsPurchasing] = useState(false)
 
@@ -41,7 +43,12 @@ const BurgerBuilder = ({
   }
 
   const purchaseHandler = () => {
-    setIsPurchasing(true)
+    if (isAuthenticated) {
+      setIsPurchasing(true)
+    } else {
+      onSetAuthRedirectPath('/checkout')
+      history.push('/auth')
+    }
   }
 
   const purchaseCancelHandler = () => {
@@ -76,6 +83,7 @@ const BurgerBuilder = ({
           total={total}
           purchasable={updatePurchaseState(ings)}
           ordered={purchaseHandler}
+          isAuth={isAuthenticated}
         />
       </>
     )
@@ -104,6 +112,7 @@ const mapStateToProps = (state) => ({
   ings: state.burgerBuilder.ingredients,
   total: state.burgerBuilder.totalPrice,
   error: state.burgerBuilder.error,
+  isAuthenticated: state.auth.token !== null,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -111,6 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
   onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
   onInitIngredients: () => dispatch(actions.initIngredients()),
   onInitPurchase: () => dispatch(actions.purchaseInit()),
+  onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path)),
 })
 
 export default connect(

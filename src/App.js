@@ -19,9 +19,7 @@ const Auth = React.lazy(() => {
   return import('containers/Auth/Auth')
 })
 
-const App = (props) => {
-  const {onTryAutoSignUp} = props
-
+const App = ({onTryAutoSignUp, isAuthenticated}) => {
   useEffect(() => {
     onTryAutoSignUp()
   }, [onTryAutoSignUp])
@@ -34,7 +32,7 @@ const App = (props) => {
     </Switch>
   )
 
-  if (props.isAuthenticated) {
+  if (isAuthenticated) {
     routes = (
       <Switch>
         <Route path="/checkout" render={(props) => <Checkout {...props} />} />

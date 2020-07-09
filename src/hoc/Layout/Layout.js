@@ -19,11 +19,11 @@ const Layout = ({isAuthenticated, children}) => {
 
   return (
     <>
-      <Toolbar isAuth={isAuthenticated} drawerToggleClicker={sideDrawerToggleHandler} />
+      <Toolbar isAuth={isAuthenticated} onDrawerToggleClicker={sideDrawerToggleHandler} />
       <SideDrawer
         isAuth={isAuthenticated}
         isOpened={isSideDrawerVisible}
-        closed={sideDrawerClosedHandler}
+        onClosed={sideDrawerClosedHandler}
       />
       <main className={classes.content}>{children}</main>
     </>
