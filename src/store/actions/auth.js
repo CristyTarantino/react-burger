@@ -28,40 +28,30 @@ export const setAuthRedirectPath = (path) => {
   }
 }
 
-export const logout = () => {
-  return {
-    type: actionTypes.AUTH_INITIATE_LOGOUT,
-  }
-}
+export const logout = () => ({
+  type: actionTypes.AUTH_INITIATE_LOGOUT,
+})
 
-export const logoutSuccess = () => {
-  return {
-    type: actionTypes.AUTH_LOGOUT,
-  }
-}
+export const logoutSuccess = () => ({
+  type: actionTypes.AUTH_LOGOUT,
+})
 
-export const checkAuthTimeout = (expirationTime) => {
-  return {
-    type: actionTypes.AUTH_CHECK_TIMOUT,
-    payload: {
-      expirationTime: expirationTime,
-    },
-  }
-}
+export const checkAuthTimeout = (expirationTime) => ({
+  type: actionTypes.AUTH_CHECK_TIMOUT,
+  payload: {
+    expirationTime: expirationTime,
+  },
+})
 
-export const auth = (email, password, isSignUp) => {
-  return {
-    type: actionTypes.AUTH_USER,
-    payload: {
-      email: email,
-      password: password,
-      isSignUp: isSignUp,
-    },
-  }
-}
+export const auth = (email, password, isSignUp) => ({
+  type: actionTypes.AUTH_USER,
+  payload: {
+    email: email,
+    password: password,
+    isSignUp: isSignUp,
+  },
+})
 
-export const authCheckState = () => {
-  return {
-    type: actionTypes.AUTH_CHECK_STATE,
-  }
-}
+export const authCheckState = () => ({
+  type: actionTypes.AUTH_CHECK_STATE,
+})
