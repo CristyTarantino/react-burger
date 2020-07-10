@@ -49,7 +49,7 @@ export const fetchOrdersStart = () => ({
 })
 
 export const fetchOrders = (token, userId) => ({
-  type: actionTypes.FETCH_BURGER,
+  type: actionTypes.FETCH_ORDERS,
   payload: {
     token: token,
     userId: userId,
