@@ -1,4 +1,4 @@
-import {put, delay} from 'redux-saga/effects'
+import {put, delay, call} from 'redux-saga/effects'
 import * as actions from 'store/actions'
 import axios from 'axios'
 
@@ -7,9 +7,9 @@ import axios from 'axios'
 // generator - function that can be executed incrementally
 export function* logoutSaga() {
   // yield - this step will execute and wait for it to finish
-  yield localStorage.removeItem('token')
-  yield localStorage.removeItem('expirationDate')
-  yield localStorage.removeItem('userId')
+  yield call([localStorage, 'removeItem'], 'token')
+  yield call([localStorage, 'removeItem'], 'expirationDate')
+  yield call([localStorage, 'removeItem'], 'userId')
   yield put(actions.logoutSuccess())
 }
 
