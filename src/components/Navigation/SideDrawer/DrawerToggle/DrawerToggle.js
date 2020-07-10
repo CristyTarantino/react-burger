@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import classes from './DrawerToggle.module.scss'
 
-const drawerToggle = (props) => (
-  <div className={classes['drawer-toggle']} onClick={props.clicked}>
+const drawerToggle = ({clicked}) => (
+  <div className={classes['drawer-toggle']} onClick={clicked}>
     <div />
     <div />
     <div />

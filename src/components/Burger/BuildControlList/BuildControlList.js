@@ -11,35 +11,43 @@ const controlList = [
   {label: 'Meat', type: 'meat'},
 ]
 
-const buildControlList = (props) => {
+const BuildControlList = ({
+  total,
+  ingredientAdded,
+  ingredientRemoved,
+  disabled,
+  purchasable,
+  ordered,
+  isAuth,
+}) => {
   return (
     <div className={classes['build-controls']}>
       <p>
-        Total Price: &pound;<strong>{props.total.toFixed(2)}</strong>
+        Total Price: &pound;<strong>{total.toFixed(2)}</strong>
       </p>
 
       {controlList.map((ctrl) => (
         <BuildControl
           key={ctrl.label}
           label={ctrl.label}
-          added={() => props.ingredientAdded(ctrl.type)}
-          removed={() => props.ingredientRemoved(ctrl.type)}
-          disabled={props.disabled[ctrl.type]}
+          added={() => ingredientAdded(ctrl.type)}
+          removed={() => ingredientRemoved(ctrl.type)}
+          disabled={disabled[ctrl.type]}
         />
       ))}
 
       <button
         className={classes['button-order']}
-        disabled={!props.purchasable}
-        onClick={props.ordered}
+        disabled={!purchasable}
+        onClick={ordered}
       >
-        ORDER NOW
+        {isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}
       </button>
     </div>
   )
 }
 
-buildControlList.propTypes = {
+BuildControlList.propTypes = {
   ingredientAdded: PropTypes.func.isRequired,
   ingredientRemoved: PropTypes.func.isRequired,
   disabled: PropTypes.object.isRequired,
@@ -48,4 +56,4 @@ buildControlList.propTypes = {
   ordered: PropTypes.func.isRequired,
 }
 
-export default buildControlList
+export default BuildControlList

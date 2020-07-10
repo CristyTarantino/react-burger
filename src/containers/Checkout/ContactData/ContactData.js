@@ -1,170 +1,167 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
+import {connect} from 'react-redux'
+import axios from 'axios-orders'
+import {cloneDeep} from 'lodash'
+
 import Button from 'components/UI/Button/Button'
 import Spinner from 'components/UI/Spinner/Spinner'
 import Input from 'components/UI/Input/Input'
 
-import {connect} from 'react-redux'
-
-import axios from 'axios-orders'
 import widthErrorHandler from 'hoc/withErrorHandler/withErrorHandler'
 import classes from './ContactData.module.scss'
 import * as orderActions from 'store/actions'
 
-import {cloneDeep} from 'lodash'
+const checkValidity = (value, rules) => {
+  let isValid = []
 
-class ContactData extends Component {
-  state = {
-    orderForm: {
-      name: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Your Name',
-        },
-        value: '',
-        validation: {
-          required: true,
-          valid: false,
-          errorMessage: 'Please enter a valid Name',
-        },
-        touched: false,
+  if (rules.required) {
+    isValid.push(value.trim() !== '')
+  }
+
+  if (rules.minLength) {
+    isValid.push(value.length >= rules.minLength)
+  }
+
+  if (rules.maxLength) {
+    isValid.push(value.length <= rules.maxLength)
+  }
+
+  if (rules.isEmail) {
+    const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    isValid.push(pattern.test(value))
+  }
+
+  if (rules.isUKPostCode) {
+    const pattern = /\b((?:(?:gir)|(?:[a-pr-uwyz])(?:(?:[0-9](?:[a-hjkpstuw]|[0-9])?)|(?:[a-hk-y][0-9](?:[0-9]|[abehmnprv-y])?)))) ?([0-9][abd-hjlnp-uw-z]{2})\b/i
+    isValid.push(pattern.test(value))
+  }
+
+  return !isValid.includes(false)
+}
+
+const ContactData = ({loading, ings, total, userId, onOrderBurger}) => {
+  const [orderForm, setOrderForm] = useState({
+    name: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Your Name',
       },
-      postcode: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Postcode',
-        },
-        value: '',
-        validation: {
-          required: true,
-          valid: false,
-          isUKPostCode: true,
-          minLength: 5,
-          maxLength: 8,
-          errorMessage: 'Please enter a valid Postcode',
-        },
-        touched: false,
+      value: '',
+      validation: {
+        required: true,
+        valid: false,
+        errorMessage: 'Please enter a valid Name',
       },
-      address: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Street',
-        },
-        value: '',
-        validation: {
-          required: true,
-          valid: false,
-          errorMessage: 'Please enter a valid Street',
-        },
+      touched: false,
+    },
+    postcode: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Postcode',
       },
-      country: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Country',
-        },
-        value: '',
-        validation: {
-          required: true,
-          valid: false,
-          errorMessage: 'Please enter a valid Country',
-        },
-        touched: false,
+      value: '',
+      validation: {
+        required: true,
+        valid: false,
+        isUKPostCode: true,
+        minLength: 5,
+        maxLength: 8,
+        errorMessage: 'Please enter a valid Postcode',
       },
-      email: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'email',
-          placeholder: 'Your email address',
-        },
-        value: '',
-        validation: {
-          required: true,
-          isEmail: true,
-          valid: false,
-          errorMessage: 'Please enter a valid email address',
-        },
-        touched: false,
+      touched: false,
+    },
+    address: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Street',
       },
-      deliveryMethod: {
-        elementType: 'select',
-        elementConfig: {
-          options: [
-            {
-              value: 'fastest',
-              displayValue: 'Fastest',
-            },
-            {
-              value: 'cheapest',
-              displayValue: 'Cheapest',
-            },
-          ],
-        },
-        value: 'fastest',
-        validation: {
-          required: false,
-        },
-        touched: false,
+      value: '',
+      validation: {
+        required: true,
+        valid: false,
+        errorMessage: 'Please enter a valid Street',
       },
     },
-    isFormValid: false,
-  }
+    country: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Country',
+      },
+      value: '',
+      validation: {
+        required: true,
+        valid: false,
+        errorMessage: 'Please enter a valid Country',
+      },
+      touched: false,
+    },
+    email: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'email',
+        placeholder: 'Your email address',
+      },
+      value: '',
+      validation: {
+        required: true,
+        isEmail: true,
+        valid: false,
+        errorMessage: 'Please enter a valid email address',
+      },
+      touched: false,
+    },
+    deliveryMethod: {
+      elementType: 'select',
+      elementConfig: {
+        options: [
+          {
+            value: 'fastest',
+            displayValue: 'Fastest',
+          },
+          {
+            value: 'cheapest',
+            displayValue: 'Cheapest',
+          },
+        ],
+      },
+      value: 'fastest',
+      validation: {
+        required: false,
+      },
+      touched: false,
+    },
+  })
+  const [isValidForm, setIsValidForm] = useState(false)
 
-  static checkValidity(value, rules) {
-    let isValid = []
-
-    if (rules.required) {
-      isValid.push(value.trim() !== '')
-    }
-
-    if (rules.minLength) {
-      isValid.push(value.length >= rules.minLength)
-    }
-
-    if (rules.maxLength) {
-      isValid.push(value.length <= rules.maxLength)
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-      isValid.push(pattern.test(value))
-    }
-
-    if (rules.isUKPostCode) {
-      const pattern = /\b((?:(?:gir)|(?:[a-pr-uwyz])(?:(?:[0-9](?:[a-hjkpstuw]|[0-9])?)|(?:[a-hk-y][0-9](?:[0-9]|[abehmnprv-y])?)))) ?([0-9][abd-hjlnp-uw-z]{2})\b/i
-      isValid.push(pattern.test(value))
-    }
-
-    return !isValid.includes(false)
-  }
-
-  orderHandler = (event) => {
+  const orderHandler = (event) => {
     event.preventDefault()
 
     const formData = {}
 
-    for (let formElementId in this.state.orderForm) {
-      if (this.state.orderForm.hasOwnProperty(formElementId)) {
-        formData[formElementId] = this.state.orderForm[formElementId].value
+    for (let formElementId in orderForm) {
+      if (orderForm.hasOwnProperty(formElementId)) {
+        formData[formElementId] = orderForm[formElementId].value
       }
     }
 
     const order = {
-      ingredients: this.props.ings,
-      price: this.props.total,
+      ingredients: ings,
+      price: total,
       orderData: formData,
-      userId: this.props.userId,
+      userId: userId,
     }
 
-    this.props.onOrderBurger(order)
+    onOrderBurger(order)
   }
 
-  inputChangedHandler = (event, formElementId) => {
-    const updatedOrderForm = cloneDeep(this.state.orderForm)
+  const inputChangedHandler = (event, formElementId) => {
+    const updatedOrderForm = cloneDeep(orderForm)
     updatedOrderForm[formElementId].value = event.target.value
-    updatedOrderForm[formElementId].validation.valid = ContactData.checkValidity(
+    updatedOrderForm[formElementId].validation.valid = checkValidity(
       event.target.value,
       updatedOrderForm[formElementId].validation
     )
@@ -178,58 +175,54 @@ class ContactData extends Component {
       }
     }
 
-    this.setState({
-      orderForm: updatedOrderForm,
-      isFormValid: !isFormValid.includes(false),
-    })
+    setOrderForm(updatedOrderForm)
+    setIsValidForm(!isFormValid.includes(false))
   }
 
-  render() {
-    const formElementList = []
-    for (let key in this.state.orderForm) {
-      if (this.state.orderForm.hasOwnProperty(key)) {
-        formElementList.push({
-          id: key,
-          config: this.state.orderForm[key],
-        })
-      }
+  const formElementList = []
+  for (let key in orderForm) {
+    if (orderForm.hasOwnProperty(key)) {
+      formElementList.push({
+        id: key,
+        config: orderForm[key],
+      })
     }
-
-    let form = (
-      <form onSubmit={this.orderHandler}>
-        {formElementList.map((formElement) => (
-          <Input
-            key={formElement.id}
-            elementType={formElement.config.elementType}
-            elementConfig={formElement.config.elementConfig}
-            value={formElement.config.value}
-            {...(formElement.config.validation.required
-              ? {valid: formElement.config.validation.valid}
-              : undefined)}
-            {...(formElement.config.validation.required
-              ? {errorMessage: formElement.config.validation.errorMessage}
-              : undefined)}
-            touched={formElement.config.touched}
-            changed={(event) => this.inputChangedHandler(event, formElement.id)}
-          />
-        ))}
-        <Button btnType="success" disabled={!this.state.isFormValid}>
-          ORDER
-        </Button>
-      </form>
-    )
-
-    if (this.props.loading) {
-      form = <Spinner />
-    }
-
-    return (
-      <div className={classes['contact-data']}>
-        <h4>Enter your contact data</h4>
-        {form}
-      </div>
-    )
   }
+
+  let form = (
+    <form onSubmit={orderHandler}>
+      {formElementList.map((formElement) => (
+        <Input
+          key={formElement.id}
+          elementType={formElement.config.elementType}
+          elementConfig={formElement.config.elementConfig}
+          value={formElement.config.value}
+          {...(formElement.config.validation.required
+            ? {valid: formElement.config.validation.valid}
+            : undefined)}
+          {...(formElement.config.validation.required
+            ? {errorMessage: formElement.config.validation.errorMessage}
+            : undefined)}
+          touched={formElement.config.touched}
+          changed={(event) => inputChangedHandler(event, formElement.id)}
+        />
+      ))}
+      <Button btnType="success" disabled={!isValidForm}>
+        ORDER
+      </Button>
+    </form>
+  )
+
+  if (loading) {
+    form = <Spinner />
+  }
+
+  return (
+    <div className={classes['contact-data']}>
+      <h4>Enter your contact data</h4>
+      {form}
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => ({

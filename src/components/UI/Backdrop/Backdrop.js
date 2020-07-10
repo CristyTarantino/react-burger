@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import classes from './Backdrop.module.scss'
 
-const backdrop = (props) =>
-  props.show ? <div className={classes.backdrop} onClick={props.clicked} /> : null
+const backdrop = ({show, clicked}) =>
+  show && <div className={classes.backdrop} onClick={clicked} />
 
 backdrop.propTypes = {
   show: PropTypes.bool,

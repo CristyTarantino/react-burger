@@ -6,21 +6,21 @@ import Logo from 'components/Logo/Logo'
 import NavigationItemList from 'components/Navigation/NavigationItemList/NavigationItemList'
 import DrawerToggle from 'components/Navigation/SideDrawer/DrawerToggle/DrawerToggle'
 
-const toolbar = (props) => (
+const Toolbar = ({onDrawerToggleClicker, isAuth}) => (
   <header className={classes.toolbar}>
-    <DrawerToggle clicked={props.drawerToggleClicker} />
+    <DrawerToggle clicked={onDrawerToggleClicker} />
     <div className={classes['logo-container']}>
       <Logo />
     </div>
     <nav className={classes['desktop-only']}>
-      <NavigationItemList isAuth={props.isAuth} />
+      <NavigationItemList isAuth={isAuth} />
     </nav>
   </header>
 )
 
-toolbar.propTypes = {
+Toolbar.propTypes = {
   isAuth: PropTypes.bool.isRequired,
-  drawerToggleClicker: PropTypes.func.isRequired,
+  onDrawerToggleClicker: PropTypes.func.isRequired,
 }
 
-export default toolbar
+export default Toolbar

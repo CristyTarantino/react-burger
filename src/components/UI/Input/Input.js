@@ -3,25 +3,30 @@ import PropTypes from 'prop-types'
 
 import classes from './Input.module.scss'
 
-const Input = (props) => {
-  let elementType = null
+const Input = ({
+  touched,
+  valid,
+  errorMessage,
+  elementType,
+  elementConfig,
+  value,
+  changed,
+  label,
+}) => {
+  let inputElementType
   const inputClasses = [classes.input__element]
-  let validationError = null
+  let validationError
 
-  if (props.hasOwnProperty('valid') && props.touched && !props.valid) {
+  if (touched && !valid) {
     inputClasses.push(classes['input__element--invalid'])
-    validationError = <p className={classes['validation-error']}>{props.errorMessage}</p>
+    validationError = <p className={classes['validation-error']}>{errorMessage}</p>
   }
 
-  switch (props.elementType) {
+  switch (elementType) {
     case 'select':
-      elementType = (
-        <select
-          className={inputClasses.join(' ')}
-          value={props.value}
-          onChange={props.changed}
-        >
-          {props.elementConfig.options.map((option) => (
+      inputElementType = (
+        <select className={inputClasses.join(' ')} value={value} onChange={changed}>
+          {elementConfig.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
             </option>
@@ -30,30 +35,30 @@ const Input = (props) => {
       )
       break
     case 'textarea':
-      elementType = (
+      inputElementType = (
         <textarea
           className={inputClasses.join(' ')}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.changed}
+          {...elementConfig}
+          value={value}
+          onChange={changed}
         />
       )
       break
     default:
-      elementType = (
+      inputElementType = (
         <input
           className={inputClasses.join(' ')}
-          {...props.elementConfig}
-          value={props.value}
-          onChange={props.changed}
+          {...elementConfig}
+          value={value}
+          onChange={changed}
         />
       )
   }
 
   return (
     <div className={classes.input}>
-      <label className={classes.label}>{props.label}</label>
-      {elementType}
+      <label className={classes.label}>{label}</label>
+      {inputElementType}
       {validationError}
     </div>
   )

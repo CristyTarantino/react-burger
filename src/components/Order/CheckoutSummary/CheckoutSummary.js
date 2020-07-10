@@ -5,25 +5,25 @@ import Button from 'components/UI/Button/Button'
 import classes from './CheckoutSummary.module.scss'
 import PropTypes from 'prop-types'
 
-const checkoutSummary = (props) => {
+const CheckoutSummary = ({ingredients, checkoutCancelled, checkoutContinued}) => {
   return (
     <div className={classes['checkout-summary']}>
       <h1>We hope it tastes good!</h1>
       <div style={{width: '100%', margin: 'auto'}}>
-        <Burger ingredients={props.ingredients} />
+        <Burger ingredients={ingredients} />
       </div>
-      <Button btnType="danger" clicked={props.checkoutCancelled}>
+      <Button btnType="danger" clicked={checkoutCancelled}>
         Cancel
       </Button>
-      <Button btnType="success" clicked={props.checkoutContinued}>
+      <Button btnType="success" clicked={checkoutContinued}>
         Continue
       </Button>
     </div>
   )
 }
 
-checkoutSummary.propTypes = {
+CheckoutSummary.propTypes = {
   ingredients: PropTypes.object.isRequired,
 }
 
-export default checkoutSummary
+export default CheckoutSummary

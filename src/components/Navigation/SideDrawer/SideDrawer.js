@@ -6,32 +6,32 @@ import Logo from 'components/Logo/Logo'
 import NavigationItemList from 'components/Navigation/NavigationItemList/NavigationItemList'
 import Backdrop from 'components/UI/Backdrop/Backdrop'
 
-const sideDrawer = (props) => {
+const SideDrawer = ({isOpened, isAuth, onClosed}) => {
   let attachedClasses = [classes['side-drawer'], classes.close]
 
-  if (props.isOpened) {
+  if (isOpened) {
     attachedClasses = [classes['side-drawer'], classes.open]
   }
 
   return (
     <>
-      <Backdrop show={props.isOpened} clicked={props.closed} />
+      <Backdrop show={isOpened} clicked={onClosed} />
       <div className={attachedClasses.join(' ')}>
         <div className={classes['logo-container']}>
           <Logo />
         </div>
         <nav className={classes['desktop-only']}>
-          <NavigationItemList isAuth={props.isAuth} />
+          <NavigationItemList isAuth={isAuth} />
         </nav>
       </div>
     </>
   )
 }
 
-sideDrawer.propTypes = {
+SideDrawer.propTypes = {
   isOpened: PropTypes.bool.isRequired,
-  closed: PropTypes.func.isRequired,
   isAuth: PropTypes.bool,
+  onClosed: PropTypes.func.isRequired,
 }
 
-export default sideDrawer
+export default SideDrawer

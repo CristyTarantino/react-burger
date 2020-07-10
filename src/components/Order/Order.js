@@ -3,19 +3,19 @@ import classes from './Order.module.scss'
 
 import PropTypes from 'prop-types'
 
-const Order = (props) => {
-  const ingredients = []
+const Order = ({ingredients, customer, price}) => {
+  const orderedIngredients = []
 
-  for (const ingredientName in props.ingredients) {
-    if (props.ingredients.hasOwnProperty(ingredientName)) {
-      ingredients.push({
+  for (const ingredientName in ingredients) {
+    if (ingredients.hasOwnProperty(ingredientName)) {
+      orderedIngredients.push({
         name: ingredientName,
-        amount: props.ingredients[ingredientName],
+        amount: ingredients[ingredientName],
       })
     }
   }
 
-  const ingredientOutput = ingredients.map((ig) => {
+  const ingredientOutput = orderedIngredients.map((ig) => {
     return (
       <span
         style={{
@@ -33,10 +33,10 @@ const Order = (props) => {
 
   return (
     <div className={classes.order}>
-      <p>{props.customer}</p>
+      <p>{customer}</p>
       <p>Ingredients: {ingredientOutput}</p>
       <p>
-        Price: <strong>USD {props.price}</strong>
+        Price: <strong>USD {price.toFixed(2)}</strong>
       </p>
     </div>
   )

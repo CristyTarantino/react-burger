@@ -3,20 +3,20 @@ import PropTypes from 'prop-types'
 
 import classes from './Button.module.scss'
 
-const button = (props) => (
+const Button = ({disabled, clicked, children, btnType}) => (
   <button
-    disabled={props.disabled}
-    className={[classes.button, classes[props.btnType]].join(' ')}
-    onClick={props.clicked}
+    disabled={disabled}
+    className={[classes.button, classes[btnType]].join(' ')}
+    onClick={clicked}
   >
-    {props.children}
+    {children}
   </button>
 )
 
-button.propTypes = {
+Button.propTypes = {
   btnType: PropTypes.string.isRequired,
   clicked: PropTypes.func,
   children: PropTypes.node.isRequired,
 }
 
-export default button
+export default Button

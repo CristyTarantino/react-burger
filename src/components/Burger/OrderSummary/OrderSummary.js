@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 
 import Button from 'components/UI/Button/Button'
 
-const orderSummary = (props) => {
-  const ingredientSummary = Object.keys(props.ingredients).map((ingKey) => {
+const orderSummary = ({ingredients, price, purchaseCancelled, purchaseContinued}) => {
+  const ingredientSummary = Object.keys(ingredients).map((ingKey) => {
     return (
       <li key={ingKey}>
-        <span style={{textTransform: 'capitalize'}}>{ingKey}</span>:{' '}
-        {props.ingredients[ingKey]}
+        <span style={{textTransform: 'capitalize'}}>{ingKey}</span>: {ingredients[ingKey]}
       </li>
     )
   })
@@ -20,14 +19,14 @@ const orderSummary = (props) => {
       <ul>{ingredientSummary}</ul>
       <p>
         <strong>
-          Total Price: <span>&pound;{props.price.toFixed(2)}</span>
+          Total Price: <span>&pound;{price.toFixed(2)}</span>
         </strong>
       </p>
       <p>Continue to checkout?</p>
-      <Button btnType="danger" clicked={props.purchaseCancelled}>
+      <Button btnType="danger" clicked={purchaseCancelled}>
         CANCEL
       </Button>
-      <Button btnType="success" clicked={props.purchaseContinued}>
+      <Button btnType="success" clicked={purchaseContinued}>
         CONTINUE
       </Button>
     </>
