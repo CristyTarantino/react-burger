@@ -66,3 +66,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Redux Saga
+
+Redux Saga: Full Documentation => https://redux-saga.js.org/
+Advanced Concepts: https://redux-saga.js.org/docs/advanced/
+API Reference: https://redux-saga.js.org/docs/api/
+Pros & Cons for Redux Saga vs Thunks: https://stackoverflow.com/questions/34930735/pros-cons-of-using-redux-saga-with-es6-generators-vs-redux-thunk-with-es2017-asy/34933395
